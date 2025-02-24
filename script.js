@@ -13,16 +13,6 @@ function createGameboard() {
     function placeMark(x, y, mark) {
         gameboard[x][y] = mark;
     };
-    
-    function isBoardEmpty() {
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (gameboard[i][j] !== null) return false;
-            }
-        }
-
-        return true;
-    }
 
     function isGameOver() {
 
@@ -49,15 +39,7 @@ function createGameboard() {
         }
 
         // check if board is full
-        for (let i = 0; i < 3; i++) {
-            if (gameboard[i].includes(null)) {
-                return false;
-            } else if (i === 3) {
-                return true;
-            }
-        }
-
-        return false;
+        return gameboard.every(row => row.every(val => val !== null));
     };
 
     return {getBoard, placeMark, isBoardEmpty, isGameOver};
