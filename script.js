@@ -6,7 +6,8 @@ function createGameboard() {
     ];
 
     function getBoard() {
-        return gameboard;
+        let gameboardCopy = gameboard.slice();
+        return gameboardCopy;
     };
 
     function placeMark(x, y, mark) {
@@ -21,6 +22,5 @@ let game = createGameboard();
 console.log(game.getBoard());
 
 game.placeMark(0, 0, "X");
-
 console.log(game.getBoard());
 
