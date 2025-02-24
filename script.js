@@ -41,7 +41,16 @@ function createGameboard() {
         return null;
     };
 
-    return {getBoard, placeMark, getWinner};
+    function isGameOver() {
+        // check if board is full or if a winner has been found
+        if (gameboard.every(row => row.every(val => val !== null)) || getWinner()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    return {getBoard, placeMark, isGameOver};
 }
 
 let game = createGameboard();
@@ -58,5 +67,5 @@ game.placeMark(2, 0, "X");
 game.placeMark(2, 1, "X");
 game.placeMark(2, 2, "O");
 
-console.log(game.getWinner());
+console.log(game.getBoard());
 
