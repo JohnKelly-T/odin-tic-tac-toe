@@ -14,17 +14,17 @@ function createGameboard() {
         gameboard[x][y] = mark;
     };
 
-    function isGameOver() {
+    function getWinner() {
 
         for (let i = 0; i < 3; i++) {
             // check rows
             if (gameboard[i][0] !== null && gameboard[i][0] === gameboard[i][1] && gameboard[i][1] === gameboard[i][2]) {
-                return true;
+                return gameboard[i][0];
             }   
 
             // check columns
             if (gameboard[0][i] !== null && gameboard[0][i] === gameboard[1][i] && gameboard[1][i] === gameboard[2][i]) {
-                return true;
+                return gameboard[0][i];
             }
         }
 
@@ -34,15 +34,14 @@ function createGameboard() {
                 (gameboard[0][0] === gameboard[1][1] && gameboard[1][1] === gameboard[2][2]) ||
                 (gameboard[0][2] === gameboard[1][1] && gameboard[1][1] === gameboard[2][0])
             ) {
-                return true;
+                return gameboard[1][1];
             }
         }
 
-        // check if board is full
-        return gameboard.every(row => row.every(val => val !== null));
+        return null;
     };
 
-    return {getBoard, placeMark, isGameOver};
+    return {getBoard, placeMark, getWinner};
 }
 
 let game = createGameboard();
@@ -55,10 +54,9 @@ game.placeMark(1, 0, "X");
 game.placeMark(1, 1, "O");
 game.placeMark(1, 2, "X");
 
-game.placeMark(2, 0, "O");
+game.placeMark(2, 0, "X");
 game.placeMark(2, 1, "X");
 game.placeMark(2, 2, "O");
 
-console.log(game.isGameOver());
-console.log(game.getBoard());
+console.log(game.getWinner());
 
