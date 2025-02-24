@@ -6,7 +6,7 @@ function createGameboard() {
     ];
 
     function getBoard() {
-        let gameboardCopy = gameboard.slice();
+        const gameboardCopy = gameboard.map(row => [...row]);
         return gameboardCopy;
     };
 
