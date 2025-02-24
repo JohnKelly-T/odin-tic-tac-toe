@@ -14,7 +14,7 @@ function createGameboard() {
         gameboard[x][y] = mark;
     };
 
-    function getWinner() {
+    function checkWinner() {
 
         for (let i = 0; i < 3; i++) {
             // check rows
@@ -43,7 +43,7 @@ function createGameboard() {
 
     function isGameOver() {
         // check if board is full or if a winner has been found
-        if (gameboard.every(row => row.every(val => val !== null)) || getWinner()) {
+        if (gameboard.every(row => row.every(val => val !== null)) || checkWinner()) {
             return true;
         }
 
