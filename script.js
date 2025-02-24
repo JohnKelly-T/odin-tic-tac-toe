@@ -42,7 +42,7 @@ function createGameboard() {
         return gameboard.every(row => row.every(val => val !== null));
     };
 
-    return {getBoard, placeMark, isBoardEmpty, isGameOver};
+    return {getBoard, placeMark, isGameOver};
 }
 
 let game = createGameboard();
