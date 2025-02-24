@@ -9,9 +9,18 @@ function createGameboard() {
         return gameboard;
     };
 
-    return {getBoard};
+    function placeMark(x, y, mark) {
+        gameboard[x][y] = mark;
+    };
+
+    return {getBoard, placeMark};
 }
 
 let game = createGameboard();
 
 console.log(game.getBoard());
+
+game.placeMark(0, 0, "X");
+
+console.log(game.getBoard());
+
