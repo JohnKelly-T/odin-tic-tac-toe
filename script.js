@@ -6,7 +6,7 @@ function createGameboard() {
     ];
 
     function getBoard() {
-        const gameboardCopy = gameboard.map(row => [...row]);
+        let gameboardCopy = gameboard.map(row => [...row]);
         return gameboardCopy;
     };
 
@@ -53,19 +53,80 @@ function createGameboard() {
     return {getBoard, placeMark, checkWinner, isGameOver};
 }
 
-let game = createGameboard();
+function createPlayer(name, mark) {
+    const score = 0;
 
-game.placeMark(0, 0, "X");
-game.placeMark(0, 1, "O");
-game.placeMark(0, 2, "X");
+    return {
+        getName: () => name,
+        getMark: () => mark,
+        incrementScore: () => score++,
+        getScore: () => score
+    }
+}
 
-game.placeMark(1, 0, "X");
-game.placeMark(1, 1, "O");
-game.placeMark(1, 2, "X");
+const gameController = (function () {
+    let gameboard = createGameboard();
+    let players;
+    let currentPlayer;
 
-game.placeMark(2, 0, "X");
-game.placeMark(2, 1, "X");
-game.placeMark(2, 2, "O");
+    function startNewGame(xPlayer, oPlayer) {
+        players = [xPlayer, oPlayer];
+        currentPlayer = xPlayer;
+    }
 
-console.log(game.getBoard());
+    function resetGameBoard() {
+        gameboard = createGameboard();
+    }
+
+    function toggleCurrentPlayer() {
+        currentPlayer = (currentPlayer === players[0]) ? players[1] : players[0];
+    } 
+
+    function playRound() {
+        while(true) {
+            let move = prompt(`Enter your move ${currentPlayer.getName()}`);
+            let moveX = parseInt(move.split("")[0]);
+            let moveY = parseInt(move.split("")[1]);
+
+            gameboard.placeMark(moveX, moveY, currentPlayer.getMark());
+
+            displayGameToConsole(gameboard.getBoard());
+
+            if (gameboard.isGameOver()) {
+                break;
+            }
+
+            toggleCurrentPlayer();
+            
+        }
+
+        let winner = (gameboard.checkWinner() === currentPlayer.getMark()) ? currentPlayer.getName() : "It's a tie";
+        alert("Congrats " + winner);
+    }
+
+    return { startNewGame, playRound };
+})();
+
+function displayGameToConsole(board) {
+    // gameboard.getBoard().map(row => row.map(item => item === null ? "null" : item).join(", ")).join("\n");
+    console.clear();
+    console.log(
+        "-------------------\n|     |     |     |\n" +
+        board.map(
+            row => row.map(
+                item => item === null ? "|     " :  "|  " + item + "  "
+            ).join("")
+            + "|"
+        ).join("\n|     |     |     |\n-------------------\n|     |     |     |\n")
+        + "\n|     |     |     |\n-------------------\n"
+    );
+
+}
+
+// createPlayers
+const player1 = createPlayer("John", "X");
+const player2 = createPlayer("Kelly", "O");
+
+gameController.startNewGame(player1, player2);
+gameController.playRound();
 
