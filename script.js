@@ -82,9 +82,9 @@ const gameController = (function () {
         currentPlayer = (currentPlayer === players[0]) ? players[1] : players[0];
     } 
 
-    function playRound() {
+    function playRoundConsole() {
         while(true) {
-            let move = prompt(`Enter your move ${currentPlayer.getName()}`);
+            let move = prompt(`Enter your move ${currentPlayer.getName()} (enter 2 numbers responding to x and y without spaces ex. 01)`);
             let moveX = parseInt(move.split("")[0]);
             let moveY = parseInt(move.split("")[1]);
 
@@ -104,23 +104,26 @@ const gameController = (function () {
         alert("Congrats " + winner);
     }
 
-    return { startNewGame, playRound };
+    return { startNewGame, playRoundConsole };
 })();
 
 function displayGameToConsole(board) {
-    // gameboard.getBoard().map(row => row.map(item => item === null ? "null" : item).join(", ")).join("\n");
     console.clear();
     console.log(
-        "-------------------\n|     |     |     |\n" +
-        board.map(
-            row => row.map(
-                item => item === null ? "|     " :  "|  " + item + "  "
-            ).join("")
-            + "|"
-        ).join("\n|     |     |     |\n-------------------\n|     |     |     |\n")
-        + "\n|     |     |     |\n-------------------\n"
+        "-------------------------\n" + 
+        "|       |       |       |\n" +
+        board[0].map(item => item === null ? "|       " :  "|   " + item + "   ").join("") + "|\n" +
+        "|       |       |       |\n" +
+        "-------------------------\n" + 
+        "|       |       |       |\n" +
+        board[1].map(item => item === null ? "|       " :  "|   " + item + "   ").join("") + "|\n" +
+        "|       |       |       |\n" +
+        "-------------------------\n" + 
+        "|       |       |       |\n" +
+        board[2].map(item => item === null ? "|       " :  "|   " + item + "   ").join("") + "|\n" +
+        "|       |       |       |\n" +
+        "-------------------------\n" 
     );
-
 }
 
 // createPlayers
@@ -128,5 +131,5 @@ const player1 = createPlayer("John", "X");
 const player2 = createPlayer("Kelly", "O");
 
 gameController.startNewGame(player1, player2);
-gameController.playRound();
+gameController.playRoundConsole();
 
