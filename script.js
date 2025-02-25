@@ -50,7 +50,7 @@ function createGameboard() {
         return false;
     }
 
-    return {getBoard, placeMark, isGameOver};
+    return {getBoard, placeMark, checkWinner, isGameOver};
 }
 
 let game = createGameboard();
