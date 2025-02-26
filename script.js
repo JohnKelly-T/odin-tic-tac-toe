@@ -153,7 +153,23 @@ const gameController = (function () {
         }
     }
 
-    return { startNewGame, playRoundConsole, getValidMoves, getTurnPlayer, getMoveResult };
+    function getBoardUtility(board) {
+
+        let winner = checkWinner(board);
+        let utility;
+
+        if (winner === "X") {
+            utility = 1;
+        } else if (winner === "O") {
+            utility = -1;
+        } else if (winner === null) {
+            utility = 0;
+        }
+
+        return utility;
+    }
+
+    return { startNewGame, playRoundConsole, getValidMoves, getTurnPlayer, getMoveResult, getBoardUtility };
 })();
 
 function displayGameToConsole(board) {
@@ -183,10 +199,10 @@ const player2 = createPlayer("Kelly", "O");
 // gameController.playRoundConsole();
 
 let sampleBoard = [
-    ["X", "O", null ],
-    [null, null, null ],
-    [null, null, null ]
+    ["X", "O", "X" ],
+    ["X", "O", "O" ],
+    ["O", "X", "X" ]
 ];
 
-console.log(gameController.getMoveResult(sampleBoard, [0, 0]));
+console.log(gameController.getBoardUtility(sampleBoard));
 
