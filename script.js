@@ -68,7 +68,6 @@ const gameController = (function () {
         alert("Congrats " + winner);
     }
 
-    
     function checkWinner(board) {
 
         for (let i = 0; i < 3; i++) {
@@ -105,7 +104,21 @@ const gameController = (function () {
         return false;
     }
 
-    return { startNewGame, playRoundConsole };
+    function getValidMoves(board) {
+        let validMoves = [];
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === null) {
+                    validMoves.push([i, j]);
+                }
+            }
+        }
+
+        return validMoves;
+    }
+
+    return { startNewGame, playRoundConsole, getValidMoves };
 })();
 
 function displayGameToConsole(board) {
@@ -131,6 +144,14 @@ function displayGameToConsole(board) {
 const player1 = createPlayer("John", "X");
 const player2 = createPlayer("Kelly", "O");
 
-gameController.startNewGame(player1, player2);
-gameController.playRoundConsole();
+// gameController.startNewGame(player1, player2);
+// gameController.playRoundConsole();
+
+let sampleBoard = [
+    ["X", "O", null ],
+    [null, null, null ],
+    [null, null, null ]
+];
+
+console.log(gameController.getValidMoves(sampleBoard));
 
