@@ -135,8 +135,25 @@ const gameController = (function () {
         return (x === o) ? "X" : "O";
         
     }
+    
+    function getMoveResult(board, move) {
+        let boardCopy = board.map(row => [...row]);
+        let validMoves = getValidMoves(board);
 
-    return { startNewGame, playRoundConsole, getValidMoves, getTurnPlayer };
+        try {
+            if (validMoves.includes(move)) {
+                boardCopy[move[0]][move[1]];
+                return boardCopy;
+            } else {
+                throw "not a valid move";
+            }
+        } catch(error) {
+            console.log("Error: " + error + ".");
+            return null;
+        }
+    }
+
+    return { startNewGame, playRoundConsole, getValidMoves, getTurnPlayer, getMoveResult };
 })();
 
 function displayGameToConsole(board) {
@@ -171,5 +188,5 @@ let sampleBoard = [
     [null, null, null ]
 ];
 
-console.log(gameController.getTurnPlayer(sampleBoard));
+console.log(gameController.getMoveResult(sampleBoard, [0, 0]));
 
