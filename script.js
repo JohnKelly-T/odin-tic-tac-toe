@@ -14,43 +14,7 @@ function createGameboard() {
         gameboard[x][y] = mark;
     };
 
-    function checkWinner() {
-
-        for (let i = 0; i < 3; i++) {
-            // check rows
-            if (gameboard[i][0] !== null && gameboard[i][0] === gameboard[i][1] && gameboard[i][1] === gameboard[i][2]) {
-                return gameboard[i][0];
-            }   
-
-            // check columns
-            if (gameboard[0][i] !== null && gameboard[0][i] === gameboard[1][i] && gameboard[1][i] === gameboard[2][i]) {
-                return gameboard[0][i];
-            }
-        }
-
-        // Check diagonals
-        if (gameboard[1][1] !== null) {
-            if (
-                (gameboard[0][0] === gameboard[1][1] && gameboard[1][1] === gameboard[2][2]) ||
-                (gameboard[0][2] === gameboard[1][1] && gameboard[1][1] === gameboard[2][0])
-            ) {
-                return gameboard[1][1];
-            }
-        }
-
-        return null;
-    };
-
-    function isGameOver() {
-        // check if board is full or if a winner has been found
-        if (gameboard.every(row => row.every(val => val !== null)) || checkWinner()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    return {getBoard, placeMark, checkWinner, isGameOver};
+    return {getBoard, placeMark};
 }
 
 function createPlayer(name, mark) {
@@ -92,7 +56,7 @@ const gameController = (function () {
 
             displayGameToConsole(gameboard.getBoard());
 
-            if (gameboard.isGameOver()) {
+            if (isGameOver(gameboard.getBoard())) {
                 break;
             }
 
@@ -100,8 +64,45 @@ const gameController = (function () {
             
         }
 
-        let winner = (gameboard.checkWinner() === currentPlayer.getMark()) ? currentPlayer.getName() : "It's a tie";
+        let winner = (checkWinner(gameboard.getBoard()) === currentPlayer.getMark()) ? currentPlayer.getName() : "It's a tie";
         alert("Congrats " + winner);
+    }
+
+    
+    function checkWinner(board) {
+
+        for (let i = 0; i < 3; i++) {
+            // check rows
+            if (board[i][0] !== null && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
+                return board[i][0];
+            }   
+
+            // check columns
+            if (board[0][i] !== null && board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
+                return board[0][i];
+            }
+        }
+
+        // Check diagonals
+        if (board[1][1] !== null) {
+            if (
+                (board[0][0] === board[1][1] && board[1][1] === board[2][2]) ||
+                (board[0][2] === board[1][1] && board[1][1] === board[2][0])
+            ) {
+                return board[1][1];
+            }
+        }
+
+        return null;
+    };
+
+    function isGameOver(board) {
+        // check if board is full or if a winner has been found
+        if (board.every(row => row.every(val => val !== null)) || checkWinner(board)) {
+            return true;
+        }
+
+        return false;
     }
 
     return { startNewGame, playRoundConsole };
