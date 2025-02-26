@@ -118,7 +118,25 @@ const gameController = (function () {
         return validMoves;
     }
 
-    return { startNewGame, playRoundConsole, getValidMoves };
+    function getTurnPlayer(board) {
+        let x = 0;
+        let o = 0;
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === "X") {
+                    x++;
+                } else if (board[i][j] === "O") {
+                    o++;
+                }
+            }
+        }
+
+        return (x === o) ? "X" : "O";
+        
+    }
+
+    return { startNewGame, playRoundConsole, getValidMoves, getTurnPlayer };
 })();
 
 function displayGameToConsole(board) {
@@ -153,5 +171,5 @@ let sampleBoard = [
     [null, null, null ]
 ];
 
-console.log(gameController.getValidMoves(sampleBoard));
+console.log(gameController.getTurnPlayer(sampleBoard));
 
