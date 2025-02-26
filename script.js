@@ -8,23 +8,24 @@ function createGameboard() {
     function getBoard() {
         let gameboardCopy = gameboard.map(row => [...row]);
         return gameboardCopy;
-    };
+    }
 
     function placeMark(x, y, mark) {
         gameboard[x][y] = mark;
-    };
+    }
 
     return {getBoard, placeMark};
 }
 
-function createPlayer(name, mark) {
+function createPlayer(name, mark, isAI=false) {
     const score = 0;
 
     return {
         getName: () => name,
         getMark: () => mark,
         incrementScore: () => score++,
-        getScore: () => score
+        getScore: () => score,
+        isAI
     }
 }
 
@@ -48,9 +49,19 @@ const gameController = (function () {
 
     function playRoundConsole() {
         while(true) {
-            let move = prompt(`Enter your move ${currentPlayer.getName()} (enter 2 numbers responding to x and y without spaces ex. 01)`);
-            let moveX = parseInt(move.split("")[0]);
-            let moveY = parseInt(move.split("")[1]);
+            let move;
+            let moveX;
+            let moveY;
+
+            if (!currentPlayer.isAI) {
+                move = prompt(`Enter your move ${currentPlayer.getName()} (enter 2 numbers responding to x and y without spaces ex. 01)`);
+                moveX = parseInt(move.split("")[0]);
+                moveY = parseInt(move.split("")[1]);
+            } else {
+                move = getMinimaxMove(gameboard.getBoard());
+                moveX = move[0];
+                moveY = move[1];
+            }
 
             gameboard.placeMark(moveX, moveY, currentPlayer.getMark());
 
@@ -93,7 +104,7 @@ const gameController = (function () {
         }
 
         return null;
-    };
+    }
 
     function isGameOver(board) {
         // check if board is full or if a winner has been found
@@ -141,8 +152,8 @@ const gameController = (function () {
         let validMoves = getValidMoves(board);
 
         try {
-            if (validMoves.includes(move)) {
-                boardCopy[move[0]][move[1]];
+            if (validMoves.some(validMove => JSON.stringify(validMove) === JSON.stringify(move))) {
+                boardCopy[move[0]][move[1]] = getTurnPlayer(board);
                 return boardCopy;
             } else {
                 throw "not a valid move";
@@ -169,7 +180,71 @@ const gameController = (function () {
         return utility;
     }
 
-    return { startNewGame, playRoundConsole, getValidMoves, getTurnPlayer, getMoveResult, getBoardUtility };
+    function getMinimaxMove(board) {
+        let boardCopy = board.map(row => [...row]);
+        let currentTurn = getTurnPlayer(board);
+        let validMoves = getValidMoves(board);
+        let minimaxMove;
+        let value;
+
+        if (currentTurn === "X") {
+            value = -Infinity;
+            for (let move of validMoves) {
+                let minVal = min(getMoveResult(boardCopy, move));
+                if ( minVal > value) {
+                    minimaxMove = move;
+                    value = minVal;
+                }
+            }
+        } else {
+            value = Infinity;
+            for (let move of validMoves) {
+                let maxVal = max(getMoveResult(boardCopy, move));
+                if (maxVal < value) {
+                    minimaxMove = move;
+                    value = maxVal;
+                }
+            }
+        }
+
+        return minimaxMove;
+    }
+
+    function max(board) {
+        let boardCopy = board.map(row => [...row]);
+
+        if (isGameOver(board)) {
+            return getBoardUtility(board);
+        }
+
+        // state value
+        let value = -Infinity;
+
+        for (let move of getValidMoves(board)) {
+            value = Math.max(value, min(getMoveResult(boardCopy, move)));
+        }
+
+        return value;
+    }
+
+    function min(board) {
+        let boardCopy = board.map(row => [...row]);
+
+        if (isGameOver(board)) {
+            return getBoardUtility(board);
+        }
+
+        // state value
+        let value = Infinity;
+
+        for (let move of getValidMoves(board)) {
+            value = Math.min(value, max(getMoveResult(boardCopy, move)));
+        }
+
+        return value;
+    }
+
+    return { startNewGame, playRoundConsole };
 })();
 
 function displayGameToConsole(board) {
@@ -193,16 +268,9 @@ function displayGameToConsole(board) {
 
 // createPlayers
 const player1 = createPlayer("John", "X");
-const player2 = createPlayer("Kelly", "O");
+const player2 = createPlayer("Kelly", "O", true);
 
-// gameController.startNewGame(player1, player2);
-// gameController.playRoundConsole();
+gameController.startNewGame(player1, player2);
+gameController.playRoundConsole();
 
-let sampleBoard = [
-    ["X", "O", "X" ],
-    ["X", "O", "O" ],
-    ["O", "X", "X" ]
-];
-
-console.log(gameController.getBoardUtility(sampleBoard));
 
