@@ -186,31 +186,40 @@ const gameController = (function () {
         let validMoves = getValidMoves(board);
         let minimaxMove;
         let value;
+        // variables for alpha beta pruning
+        let alpha = -Infinity;
+        let beta = Infinity;
 
         if (currentTurn === "X") {
             value = -Infinity;
             for (let move of validMoves) {
-                let minVal = min(getMoveResult(boardCopy, move));
+                let minVal = min(getMoveResult(boardCopy, move), alpha, beta);
                 if ( minVal > value) {
                     minimaxMove = move;
                     value = minVal;
                 }
+
+                alpha = Math.max(alpha, value);
+                if (alpha >= beta) break;
             }
         } else {
             value = Infinity;
             for (let move of validMoves) {
-                let maxVal = max(getMoveResult(boardCopy, move));
+                let maxVal = max(getMoveResult(boardCopy, move), alpha, beta);
                 if (maxVal < value) {
                     minimaxMove = move;
                     value = maxVal;
                 }
+
+                beta = Math.min(beta, value);
+                if (alpha >= beta) break;
             }
         }
 
         return minimaxMove;
     }
 
-    function max(board) {
+    function max(board, alpha, beta) {
         let boardCopy = board.map(row => [...row]);
 
         if (isGameOver(board)) {
@@ -221,13 +230,15 @@ const gameController = (function () {
         let value = -Infinity;
 
         for (let move of getValidMoves(board)) {
-            value = Math.max(value, min(getMoveResult(boardCopy, move)));
+            value = Math.max(value, min(getMoveResult(boardCopy, move), alpha, beta));
+            alpha = Math.max(alpha, value);
+            if (alpha >= beta) break;
         }
 
         return value;
     }
 
-    function min(board) {
+    function min(board, alpha, beta) {
         let boardCopy = board.map(row => [...row]);
 
         if (isGameOver(board)) {
@@ -238,7 +249,9 @@ const gameController = (function () {
         let value = Infinity;
 
         for (let move of getValidMoves(board)) {
-            value = Math.min(value, max(getMoveResult(boardCopy, move)));
+            value = Math.min(value, max(getMoveResult(boardCopy, move), alpha, beta));
+            beta = Math.min(beta, value);
+            if (alpha >= beta) break;
         }
 
         return value;
