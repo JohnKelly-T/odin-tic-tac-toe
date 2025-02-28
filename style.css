@@ -1,0 +1,138 @@
+* {
+    font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+:root {
+    --background-color: #1A233B;
+    --default-color: 219, 37%;
+    --default-color-2: hsl(219, 37%, 27%);
+    --navy-blue: #101431;
+
+    --red: hsl(344, 87%, 50%);
+    --yellow: hsl(39, 87%, 58%);
+
+    --rounded-border: 15px;
+}
+
+body {
+    background-color: var(--background-color);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* utility classes */
+
+.border-rounded{
+    border-radius: 15px;
+}
+
+.surface {
+    background-color: hsl(var(--surface-color), 27%);
+    box-shadow: inset 0 0 3px 0 rgba(255, 255, 255, 0.5),
+                inset 0 1px 2px 0 rgba(255, 255, 255, 0.6);
+    border-radius: var(--rounded-border);
+}
+
+.shadow {
+    background: linear-gradient(
+        to right, 
+        hsl(var(--surface-color), 16%) 0%, 
+        hsl(var(--surface-color), 20%) 8%, 
+        hsl(var(--surface-color), 20%) 92%,
+        hsl(var(--surface-color), 16%) 100%);
+    background-color: hsl(var(--surface-color), 20%);
+    padding: 2px 2px 1rem;
+    border-radius: var(--rounded-border);
+}
+
+/* element classes */
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    width: calc(100vh * 0.45);
+    height: 100vh;
+}
+
+.scoreboard {
+    --surface-color: var(--default-color);
+    width: 100%;
+    box-shadow: 0 0 2px 2px var(--yellow);
+}
+
+.scoreboard .surface {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    row-gap: 0.5rem;
+
+    padding: 0.8rem;
+    width: 100%;
+}
+
+.scoreboard-header {
+    text-align: center;
+    color: var(--yellow);
+    font-weight: 900;
+}
+
+.scoreboard-screen {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-auto-flow: column;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
+
+    border-radius: 10px;
+    padding: 1rem 0 0.2rem;
+    width: 100%;
+    background-color: var(--navy-blue);
+}
+
+.scoreboard-screen * {
+    color: white;
+}
+
+.scoreboard img {
+    filter: brightness(200%);
+    width: 2rem;
+    aspect-ratio: 1;
+}
+
+.score-container {
+    grid-row: span 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.score-container .score {
+    font-family: "Teko", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 4rem;
+    margin: -1rem;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-label {
+    font-size: 0.8rem;
+}
+
+.info {
+    font-family: "Teko", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: -0.4rem;
+}
