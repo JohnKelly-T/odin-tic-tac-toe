@@ -7,9 +7,47 @@
 
     <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Teko:wght@300..700&display=swap" rel="stylesheet">
+
     <script src="./script.js" defer></script>
   </head>
 </html>
   <body>
+    <div class="main-container">
+
+      <div class="scoreboard shadow">
+        <div class="surface">
+          <div id="player-1-name" class="scoreboard-header">Player 1</div>
+          <div class="scoreboard-header">vs</div>
+          <div id="player-2-name" class="scoreboard-header">Player 2</div>
+          
+          <div class="scoreboard-screen">
+            <div class="score-container">
+              <img src="./img/placeholder.png" alt="" class="scoreboard-icon">
+              <div id="x-score" class="score">0</div>
+            </div>
+            
+            <div class="info-container">
+              <span class="info-label">TURN</span>
+              <span class="info">X</span>
+            </div>
+            
+            <div class="info-container">
+              <span class="info-label">TIES</span>
+              <span class="info">0</span>
+            </div>
+
+            <div class="score-container">
+              <img src="./img/placeholder.png" alt="" class="scoreboard-icon">
+              <div id="x-score" class="score">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </body>
 </html>
