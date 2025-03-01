@@ -7,10 +7,12 @@
     --default-color: 43, 61, 94;
     --navy-blue: 16, 20, 49;
 
-    --red: 238, 17, 76;
+    --red: 242, 14, 74;
+    --cyan: 13, 223, 242;
     --yellow: 241, 176, 55;
+    --light-gray: 168, 190, 201;
 
-    --rounded-border: 15px;
+    --rounded-border: 12px;
     --edge-height: 0.6rem;
 }
 
@@ -27,6 +29,7 @@ body {
 
 button {
     padding: 0;
+    border: none;
 }
 
 button:hover {
@@ -43,7 +46,7 @@ button:hover {
     border: 2px solid rgba(0, 0, 0, 0.3);
     border-radius: var(--rounded-border);
     width: 100%;
-    height: auto;
+    height: 100%;
     transform: translateY(calc(var(--edge-height) / -2));
     transition:
       transform
@@ -65,6 +68,7 @@ button:hover {
         rgba(0, 0, 0, 0.25) 92%,
         rgba(0, 0, 0, 0.5) 100%);
     padding: 0 0 0.6rem;
+    border: 2px solid rgba(0, 0, 0, 0.5);
     border-radius: var(--rounded-border);
 }
 
@@ -77,7 +81,7 @@ button:hover {
     border-radius: var(--rounded-border);
     background: rgba(0, 0, 0, 0.25);
     transform: translateY(5px);
-    filter: blur(2px);
+    filter: blur(3px);
 }
 
 button:hover .surface {
@@ -106,9 +110,9 @@ button:active .shadow {
 .main-container {
     display: flex;
     flex-direction: column;
-    gap: 5rem;
-    padding-top: 2rem;
-    width: calc(100vh * 0.453);
+    justify-content: center;
+    gap: 4rem;
+    width: 300px;
     height: 100vh;
 }
 
@@ -134,6 +138,8 @@ button:active .shadow {
 
 .scoreboard-header {
     text-align: center;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.40),
+                 0 -1px 1px rgba(0, 0, 0, 0.50);
     color: rgb(var(--yellow));
     font-weight: 900;
 }
@@ -197,20 +203,10 @@ button:active .shadow {
     margin: -0.8rem;
 }
 
-.test-item {
-    --surface-color: 344, 87%;
-    margin-top: 4rem;
-}
-
-.test-item .surface {
-    width: 100px;
-    aspect-ratio: 1;
-}
-
 .tile-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1.2rem;
     row-gap: 2rem;
     width: 100%;
 }
@@ -227,3 +223,48 @@ button:active .shadow {
     height: 100%;
 }
 
+/* .tile.red {
+    --surface-color: var(--red);
+}
+
+.tile.cyan {
+    --surface-color: var(--cyan);
+} */
+
+#quit-button {
+    --surface-color: var(--light-gray);
+}
+
+#reset-button {
+    --surface-color: var(--yellow);
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    width: 100%;
+    height: 4rem;
+}
+
+.action-button {
+    position: relative;
+    align-items: center;
+    background: none;
+    border-radius: var(--rounded-border);
+}
+
+.action-button .surface {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-text {
+    font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.60),
+                 0 -1px 0 rgba(0, 0, 0, 0.50);
+    color: rgb(var(--navy-blue));
+}
