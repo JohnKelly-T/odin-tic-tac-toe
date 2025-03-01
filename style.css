@@ -4,15 +4,17 @@
 
 :root {
     --background-color: #1A233B;
-    --default-color: 219, 37%;
-    --default-color-2: hsl(219, 37%, 27%);
-    --navy-blue: #101431;
+    --default-color: 43, 61, 94;
+    --navy-blue: 16, 20, 49;
 
-    --red: hsl(344, 87%, 50%);
-    --yellow: hsl(39, 87%, 58%);
+    --red: 238, 17, 76;
+    --yellow: 241, 176, 55;
 
     --rounded-border: 15px;
+    --edge-height: 0.6rem;
 }
+
+/* Element selectors */
 
 body {
     background-color: var(--background-color);
@@ -23,29 +25,80 @@ body {
     align-items: center;
 }
 
-/* utility classes */
-
-.border-rounded{
-    border-radius: 15px;
+button {
+    padding: 0;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
+/* utility classes */
 .surface {
-    background-color: hsl(var(--surface-color), 27%);
-    box-shadow: inset 0 0 3px 0 rgba(255, 255, 255, 0.5),
-                inset 0 1px 2px 0 rgba(255, 255, 255, 0.6);
+    
+    position: relative;
+    background-color: rgb(var(--surface-color));
+    box-shadow: inset 0 0 2px 0 rgba(255, 255, 255, 0.2),
+                inset 0 1px 2px 0 rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: var(--rounded-border);
+    width: 100%;
+    height: auto;
+    transform: translateY(calc(var(--edge-height) / -2));
+    transition:
+      transform
+      600ms
+      cubic-bezier(.3, .7, .4, 1);
+}
+
+.edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(var(--surface-color));
+    background-image: linear-gradient(
+        to right, 
+        rgba(0, 0, 0, 0.5) 0%, 
+        rgba(0, 0, 0, 0.25) 8%, 
+        rgba(0, 0, 0, 0.25) 92%,
+        rgba(0, 0, 0, 0.5) 100%);
+    padding: 0 0 0.6rem;
     border-radius: var(--rounded-border);
 }
 
 .shadow {
-    background: linear-gradient(
-        to right, 
-        hsl(var(--surface-color), 16%) 0%, 
-        hsl(var(--surface-color), 20%) 8%, 
-        hsl(var(--surface-color), 20%) 92%,
-        hsl(var(--surface-color), 16%) 100%);
-    background-color: hsl(var(--surface-color), 20%);
-    padding: 1px 1px 0.8rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border-radius: var(--rounded-border);
+    background: rgba(0, 0, 0, 0.25);
+    transform: translateY(5px);
+    filter: blur(2px);
+}
+
+button:hover .surface {
+    transform: translateY(calc(var(--edge-height) * -1));
+    transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+button:active .surface {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+}
+
+button:hover .shadow {
+    transform: translateY(8px);
+    transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+button:active .shadow {
+    transform: translateY(1px);
+    background: rgb(var(--yellow));
+    transition: transform 34ms;
 }
 
 /* element classes */
@@ -53,15 +106,20 @@ body {
 .main-container {
     display: flex;
     flex-direction: column;
+    gap: 5rem;
     padding-top: 2rem;
-    width: calc(100vh * 0.45);
+    width: calc(100vh * 0.453);
     height: 100vh;
 }
 
 .scoreboard {
     --surface-color: var(--default-color);
+
+    position: relative;
     width: 100%;
-    box-shadow: 0 0 1px 2px var(--yellow);
+    border-radius: var(--rounded-border);
+    box-shadow: 0 0 1px 2px rgb(var(--yellow)),
+                0 calc(var(--edge-height) * -1) 1px 2px rgb(var(--yellow));
 }
 
 .scoreboard .surface {
@@ -69,14 +127,14 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto 1fr;
     row-gap: 0.2rem;
-
     padding: 0.5rem;
-    width: 100%;
+
+    transform: translateY(calc(var(--edge-height) / -1));
 }
 
 .scoreboard-header {
     text-align: center;
-    color: var(--yellow);
+    color: rgb(var(--yellow));
     font-weight: 900;
 }
 
@@ -92,7 +150,7 @@ body {
     border-radius: 10px;
     padding: 0.5rem 0;
     width: 100%;
-    background-color: var(--navy-blue);
+    background-color: rgb(var(--navy-blue));
 }
 
 .scoreboard-screen * {
@@ -148,3 +206,24 @@ body {
     width: 100px;
     aspect-ratio: 1;
 }
+
+.tile-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    row-gap: 2rem;
+    width: 100%;
+}
+
+.tile {
+    --surface-color: var(--default-color);
+    aspect-ratio: 10 / 9;
+    position: relative;
+    border: none;
+    background: none;
+}
+
+.tile .surface {
+    height: 100%;
+}
+
