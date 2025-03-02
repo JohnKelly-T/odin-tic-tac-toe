@@ -142,7 +142,7 @@ const gameController = (function () {
         } else if (checkWinner() === "O") {
             players[1].incrementScore();
         } else {
-            ties++;
+            tieCounter++;
         }
     }
 
