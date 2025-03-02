@@ -126,6 +126,15 @@ button:active .shadow {
                 0 calc(var(--edge-height) * -1) 1px 2px rgb(var(--yellow));
 }
 
+.scoreboard-icon {
+    width: 1.5rem;
+}
+
+.scoreboard-icon.o-icon {
+    transform: scale(1.1)
+               translateY(-5%);
+}
+
 .scoreboard .surface {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -161,12 +170,6 @@ button:active .shadow {
 
 .scoreboard-screen * {
     color: white;
-}
-
-.scoreboard img {
-    filter: brightness(200%);
-    width: 2rem;
-    aspect-ratio: 1;
 }
 
 .score-container {
@@ -239,14 +242,6 @@ button:active .shadow {
 .o-icon {
     fill: rgb(var(--cyan));
 }
-
-/* .tile.red {
-    --surface-color: var(--red);
-}
-
-.tile.cyan {
-    --surface-color: var(--cyan);
-} */
 
 #quit-button {
     --surface-color: var(--light-gray);
