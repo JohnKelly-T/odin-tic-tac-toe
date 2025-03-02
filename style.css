@@ -37,13 +37,6 @@ button:hover {
 }
 
 /* utility classes */
-.red {
-    color: rgb(var(--red));
-}
-
-.cyan {
-    color: rgb(var(--cyan));
-}
 
 .surface {
     
@@ -288,4 +281,12 @@ button:active .shadow {
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.60),
                  0 -1px 0 rgba(0, 0, 0, 0.50);
     color: rgb(var(--navy-blue));
+}
+
+.red {
+    color: rgb(var(--red));
+}
+
+.cyan {
+    color: rgb(var(--cyan));
 }
