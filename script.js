@@ -1,3 +1,37 @@
+let tileButtons = document.querySelectorAll(".tile");
+let xIcons = document.querySelectorAll(".tile .x-icon");
+let oIcons = document.querySelectorAll(".tile .o-icon");
+
+let xScore = document.querySelector("#x-score");
+let oScore = document.querySelector("#o-score");
+
+let resetButton = document.querySelector("#reset-button");
+
+// add event listeners 
+tileButtons.forEach((button, index) => {
+    button.addEventListener("click", (e) => {
+
+        let row = Math.floor( index / 3 );
+        let col= index % 3;
+
+        gameController.updateGameState(row, col);
+
+        if (gameController.isGameOver()) {
+            displayController.disableTileButtons();
+        }
+
+        displayController.updateTiles();
+        // displayController.updateScoreboard();
+        button.disabled = true;
+    });                                                                          
+});
+
+resetButton.addEventListener("click", (e) => {
+    gameController.resetGame();
+    displayController.resetDisplay();
+});
+
+
 function createGameboard() {
     let gameboard = [
         [null, null, null],
@@ -10,8 +44,8 @@ function createGameboard() {
         return gameboardCopy;
     }
 
-    function placeMark(x, y, mark) {
-        gameboard[x][y] = mark;
+    function placeMark(row, col, mark) {
+        gameboard[row][col] = mark;
     }
 
     return {getBoard, placeMark};
@@ -32,6 +66,7 @@ function createPlayer(name, mark, isAI=false) {
 const gameController = (function () {
     let gameboard = createGameboard();
     let players;
+    let tieCounter;
     let currentPlayer;
 
     function startNewGame(xPlayer, oPlayer) {
@@ -39,8 +74,13 @@ const gameController = (function () {
         currentPlayer = xPlayer;
     }
 
-    function resetGameBoard() {
+    function getBoard() {
+        return gameboard.getBoard();
+    }
+
+    function resetGame() {
         gameboard = createGameboard();
+        currentPlayer = players[0];
     }
 
     function toggleCurrentPlayer() {
@@ -54,7 +94,7 @@ const gameController = (function () {
             let moveY;
 
             if (!currentPlayer.isAI) {
-                move = prompt(`Enter your move ${currentPlayer.getName()} (enter 2 numbers responding to x and y without spaces ex. 01)`);
+                // move = prompt(`Enter your move ${currentPlayer.getName()} (enter 2 numbers responding to x and y without spaces ex. 01)`);
                 moveX = parseInt(move.split("")[0]);
                 moveY = parseInt(move.split("")[1]);
             } else {
@@ -79,7 +119,12 @@ const gameController = (function () {
         alert("Congrats " + winner);
     }
 
-    function checkWinner(board) {
+    function updateGameState(x, y) {
+        gameboard.placeMark(x, y, currentPlayer.getMark());
+        toggleCurrentPlayer();
+    }
+
+    function checkWinner(board = gameboard.getBoard()) {
 
         for (let i = 0; i < 3; i++) {
             // check rows
@@ -106,7 +151,7 @@ const gameController = (function () {
         return null;
     }
 
-    function isGameOver(board) {
+    function isGameOver(board = gameboard.getBoard()) {
         // check if board is full or if a winner has been found
         if (board.every(row => row.every(val => val !== null)) || checkWinner(board)) {
             return true;
@@ -115,7 +160,7 @@ const gameController = (function () {
         return false;
     }
 
-    function getValidMoves(board) {
+    function getValidMoves(board = gameboard.getBoard()) {
         let validMoves = [];
 
         for (let i = 0; i < 3; i++) {
@@ -129,7 +174,7 @@ const gameController = (function () {
         return validMoves;
     }
 
-    function getTurnPlayer(board) {
+    function getTurnPlayer(board = gameboard.getBoard()) {
         let x = 0;
         let o = 0;
 
@@ -257,7 +302,7 @@ const gameController = (function () {
         return value;
     }
 
-    return { startNewGame, playRoundConsole };
+    return { startNewGame, getBoard, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer };
 })();
 
 function displayGameToConsole(board) {
@@ -279,11 +324,56 @@ function displayGameToConsole(board) {
     );
 }
 
+const displayController = (function () {
+
+    function updateTiles() {
+        let gameboard = gameController.getBoard();
+
+        gameboard.flat().forEach((mark, index) => {
+            if (mark === "X") {
+                xIcons[index].style.display = "block";
+            } else if (mark === "O") {
+                oIcons[index].style.display = "block";
+            }
+        });
+    }
+
+    function updateScoreboard() {
+
+
+            return;
+    }
+
+    function resetDisplay() {
+        document.querySelectorAll(".tile .tile-icon").forEach(tileIcon => {
+            tileIcon.style.display = "none";
+        });
+
+        enableTileButtons();
+
+        gameController.startNewGame(player1, player2);
+    }
+
+    function disableTileButtons() {
+        tileButtons.forEach(button => {
+            button.disabled = true;
+        });
+    }
+
+    function enableTileButtons() {
+        tileButtons.forEach(button => {
+            button.disabled = false;
+        });
+    }
+
+    return { updateTiles, updateScoreboard, resetDisplay, disableTileButtons, enableTileButtons };
+})();
+
 // createPlayers
 const player1 = createPlayer("John", "X");
 const player2 = createPlayer("Kelly", "O", true);
 
 gameController.startNewGame(player1, player2);
-gameController.playRoundConsole();
+// gameController.playRoundConsole();
 
 
