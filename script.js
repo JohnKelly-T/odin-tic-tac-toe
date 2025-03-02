@@ -2,9 +2,10 @@ let tileButtons = document.querySelectorAll(".tile");
 let xIcons = document.querySelectorAll(".tile .x-icon");
 let oIcons = document.querySelectorAll(".tile .o-icon");
 
-let xScore = document.querySelector("#x-score");
-let oScore = document.querySelector("#o-score");
-
+let xScoreDiv = document.querySelector("#x-score");
+let oScoreDiv = document.querySelector("#o-score");
+let turnDiv = document.querySelector("#turn");
+let tiesDiv = document.querySelector("#ties");
 let resetButton = document.querySelector("#reset-button");
 
 // add event listeners 
@@ -18,10 +19,11 @@ tileButtons.forEach((button, index) => {
 
         if (gameController.isGameOver()) {
             displayController.disableTileButtons();
+            gameController.updateScores();
         }
 
         displayController.updateTiles();
-        // displayController.updateScoreboard();
+        displayController.updateScoreboard();
         button.disabled = true;
     });                                                                          
 });
@@ -52,13 +54,14 @@ function createGameboard() {
 }
 
 function createPlayer(name, mark, isAI=false) {
-    const score = 0;
+    let score = 0;
 
     return {
         getName: () => name,
         getMark: () => mark,
         incrementScore: () => score++,
         getScore: () => score,
+        resetScore: () => {score = 0},
         isAI
     }
 }
@@ -66,7 +69,7 @@ function createPlayer(name, mark, isAI=false) {
 const gameController = (function () {
     let gameboard = createGameboard();
     let players;
-    let tieCounter;
+    let tieCounter = 0;
     let currentPlayer;
 
     function startNewGame(xPlayer, oPlayer) {
@@ -78,9 +81,18 @@ const gameController = (function () {
         return gameboard.getBoard();
     }
 
+    function getScores() {
+        let xScore = players[0].getScore();
+        let oScore = players[1].getScore();
+        let ties = tieCounter;
+        return { xScore, oScore, ties };
+    }
+
     function resetGame() {
         gameboard = createGameboard();
         currentPlayer = players[0];
+        players.forEach(player => player.resetScore());
+        tieCounter = 0;
     }
 
     function toggleCurrentPlayer() {
@@ -122,6 +134,16 @@ const gameController = (function () {
     function updateGameState(x, y) {
         gameboard.placeMark(x, y, currentPlayer.getMark());
         toggleCurrentPlayer();
+    }
+
+    function updateScores() {
+        if (checkWinner() === "X") {
+            players[0].incrementScore();
+        } else if (checkWinner() === "O") {
+            players[1].incrementScore();
+        } else {
+            ties++;
+        }
     }
 
     function checkWinner(board = gameboard.getBoard()) {
@@ -302,7 +324,7 @@ const gameController = (function () {
         return value;
     }
 
-    return { startNewGame, getBoard, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer };
+    return { startNewGame, getBoard, getScores, updateScores, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer };
 })();
 
 function displayGameToConsole(board) {
@@ -339,9 +361,16 @@ const displayController = (function () {
     }
 
     function updateScoreboard() {
+        let turn = gameController.getTurnPlayer();
+        let scores = gameController.getScores();
 
+        xScoreDiv.textContent = scores.xScore.toString();
+        oScoreDiv.textContent = scores.oScore.toString();
+        tiesDiv.textContent = scores.ties.toString();
+        turnDiv.textContent = turn;
+        turnDiv.classList.toggle("red");
+        turnDiv.classList.toggle("cyan");
 
-            return;
     }
 
     function resetDisplay() {
