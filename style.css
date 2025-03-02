@@ -221,6 +221,23 @@ button:active .shadow {
 
 .tile .surface {
     height: 100%;
+    display: grid;
+    place-content: center;
+}
+
+.tile-icon {
+    display: none;
+    width: 2.5rem;
+    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.4))
+            drop-shadow(0 -1px 0 rgba(0, 0, 0, 0.8));
+}
+
+.x-icon {
+    fill: rgb(var(--red));
+}
+
+.o-icon {
+    fill: rgb(var(--cyan));
 }
 
 /* .tile.red {
