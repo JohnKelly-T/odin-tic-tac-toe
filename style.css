@@ -37,6 +37,14 @@ button:hover {
 }
 
 /* utility classes */
+.red {
+    color: rgb(var(--red));
+}
+
+.cyan {
+    color: rgb(var(--cyan));
+}
+
 .surface {
     
     position: relative;
