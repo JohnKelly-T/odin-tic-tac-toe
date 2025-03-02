@@ -127,7 +127,7 @@ button:active .shadow {
 }
 
 .scoreboard-icon {
-    width: 1.5rem;
+    width: 1.6rem;
 }
 
 .scoreboard-icon.o-icon {
@@ -192,6 +192,7 @@ button:active .shadow {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 0.5rem;
     align-items: center;
 }
 
