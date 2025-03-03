@@ -159,7 +159,39 @@ button:active .shadow {
 }
 
 .scoreboard-screen {
-    grid-column: 1 / -1;
+    position: relative;
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 5 / 2;
+    border-radius: 10px;
+    background-color: rgb(var(--navy-blue));
+}
+
+.scoreboard-screen * {
+    color: white;
+}
+
+.slide-screen {
+    position: absolute;
+    width: 100%;
+    height: 101%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.screen-edge {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 4px 10px rgb(var(--navy-blue));
+    pointer-events: none;
+}
+
+.tally-screen {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     grid-template-rows: 1fr 1fr;
@@ -167,14 +199,46 @@ button:active .shadow {
     column-gap: 1rem;
     row-gap: 0.5rem;
 
-    border-radius: 10px;
     padding: 0.5rem 0;
-    width: 100%;
-    background-color: rgb(var(--navy-blue));
 }
 
-.scoreboard-screen * {
-    color: white;
+.game-over-screen {
+    top: -120%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-family: "Teko", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.game-over-screen * {
+    font-family: inherit;
+}
+
+#game-over-message {
+    font-size: 2rem;
+    margin: -0.2rem;
+}
+
+#next-round-button {
+    font-size: 1.5rem;
+    background: none;
+    color: rgb(var(--yellow));
+    padding: 0 1rem;
+    border: 2px solid rgb(var(--yellow));
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+#next-round-button:hover {
+    box-shadow: 0px 0px 8px rgb(var(--yellow));
+    filter: brightness(110%);
+    transition: all 0.3s ease;
+}
+
+#next-round-button:active {
+    box-shadow: none;
 }
 
 .score-container {
