@@ -83,6 +83,10 @@ button:hover {
     background: rgba(0, 0, 0, 0.25);
     transform: translateY(5px);
     filter: blur(3px);
+    transition:
+      transform
+      600ms
+      cubic-bezier(.3, .7, .4, 1);
 }
 
 button:hover .surface {
@@ -124,7 +128,7 @@ button:active .shadow {
     width: 100%;
     border-radius: var(--rounded-border);
     box-shadow: 0 0 1px 2px rgb(var(--yellow)),
-                0 calc(var(--edge-height) * -1) 1px 2px rgb(var(--yellow));
+                0 calc(var(--edge-height) / -2) 1px 2px rgb(var(--yellow));
 }
 
 .scoreboard-icon {
@@ -143,7 +147,7 @@ button:active .shadow {
     row-gap: 0.2rem;
     padding: 0.5rem;
 
-    transform: translateY(calc(var(--edge-height) / -1));
+    transform: translateY(calc(var(--edge-height) / -2));
 }
 
 .scoreboard-header {
