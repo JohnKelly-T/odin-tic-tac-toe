@@ -1,6 +1,7 @@
 let tileButtons = document.querySelectorAll(".tile");
 let xIcons = document.querySelectorAll(".tile .x-icon");
 let oIcons = document.querySelectorAll(".tile .o-icon");
+let screenboardSlides = document.querySelectorAll(".slide-screen");
 
 let xScoreDiv = document.querySelector("#x-score");
 let oScoreDiv = document.querySelector("#o-score");
@@ -8,7 +9,7 @@ let turnDiv = document.querySelector("#turn");
 let tiesDiv = document.querySelector("#ties");
 let resetButton = document.querySelector("#reset-button");
 let nextRoundButton = document.querySelector("#next-round-button");
-let screenboardSlides = document.querySelectorAll(".slide-screen");
+let gameOverMessage = document.querySelector("#game-over-message");
 
 // add event listeners 
 tileButtons.forEach((button, index) => {
@@ -20,6 +21,7 @@ tileButtons.forEach((button, index) => {
         gameController.updateGameState(row, col);
 
         if (gameController.isGameOver()) {
+            displayController.updateGameOverMessage();
             screenboardSlides.forEach(slide => {slide.style.transform = "translateY(120%)"});
             displayController.disableTileButtons();
             gameController.updateScores();
@@ -339,7 +341,7 @@ const gameController = (function () {
         return value;
     }
 
-    return { startNewGame, getBoard, clearBoard, getScores, updateScores, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer };
+    return { startNewGame, getBoard, clearBoard, getScores, updateScores, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer, checkWinner };
 })();
 
 function displayGameToConsole(board) {
@@ -388,6 +390,18 @@ const displayController = (function () {
 
     }
 
+    function updateGameOverMessage() {
+        let winner = gameController.checkWinner();
+
+        if (winner === "X") {
+            gameOverMessage.textContent = "X takes the round!";
+        } else if (winner === "O") {
+            gameOverMessage.textContent = "O takes the round!";
+        } else {
+            gameOverMessage.textContent = "It's a tie!";
+        }
+    }
+
     function resetDisplay() {
         document.querySelectorAll(".tile .tile-icon").forEach(tileIcon => {
             tileIcon.style.display = "none";
@@ -413,7 +427,7 @@ const displayController = (function () {
         });
     }
 
-    return { updateTiles, updateScoreboard, resetDisplay, disableTileButtons, enableTileButtons };
+    return { updateTiles, updateScoreboard, resetDisplay, updateGameOverMessage, disableTileButtons, enableTileButtons };
 })();
 
 // createPlayers
