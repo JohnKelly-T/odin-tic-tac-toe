@@ -378,6 +378,9 @@ const displayController = (function () {
             tileIcon.style.display = "none";
         });
 
+        turnDiv.textContent = "X";
+        turnDiv.classList.add("red");
+        turnDiv.classList.remove("cyan");
         enableTileButtons();
 
         gameController.startNewGame(player1, player2);
