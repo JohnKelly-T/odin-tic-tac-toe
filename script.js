@@ -46,7 +46,6 @@ nextRoundButton.addEventListener("click", (e) => {
     displayController.resetDisplay();
 });
 
-
 function createGameboard() {
     let gameboard = [
         [null, null, null],
@@ -400,12 +399,61 @@ const displayController = (function () {
         } else {
             gameOverMessage.textContent = "It's a tie!";
         }
+
+        highlightWinnerTiles(winner);
+    }
+
+    function highlightWinnerTiles(winner) {
+        let board = gameController.getBoard();
+        let winnerTiles = [];
+
+        if (winner === null) {
+            return;
+        }
+
+        // get winner Tile indexes
+        for (let i = 0; i < 3; i++) {
+            // check rows
+            if (board[i][0] !== null && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
+                winnerTiles.push([i, 0], [i, 1], [i, 2]);
+            }   
+
+            // check columns
+            if (board[0][i] !== null && board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
+                winnerTiles.push([0, i], [1, i], [2, i]);
+            }
+        }
+
+        // Check diagonals
+        if (board[1][1] !== null) {
+            if ((board[0][0] === board[1][1] && board[1][1] === board[2][2])) {
+                winnerTiles.push([0, 0], [1, 1], [2, 2]);
+            } else if (board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+                winnerTiles.push([0, 2], [1, 1], [2, 0]);
+            }
+        }
+
+        let tileColor = (winner === "X") ? "red-tile" : "cyan-tile";
+
+        for (let index2d of winnerTiles) {
+            let index1d = (index2d[0] * 3) + (index2d[1] % 3);
+            xIcons[index1d].classList.add("dark-icon");
+            oIcons[index1d].classList.add("dark-icon");
+            tileButtons[index1d].classList.add(tileColor);
+        }
+
     }
 
     function resetDisplay() {
         document.querySelectorAll(".tile .tile-icon").forEach(tileIcon => {
             tileIcon.style.display = "none";
+            tileIcon.classList.remove("dark-icon");
         });
+
+        tileButtons.forEach(button => {
+            button.classList.remove("red-tile");
+            button.classList.remove("cyan-tile");
+        })
 
         turnDiv.textContent = "X";
         turnDiv.classList.add("red");
