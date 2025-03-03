@@ -7,6 +7,8 @@ let oScoreDiv = document.querySelector("#o-score");
 let turnDiv = document.querySelector("#turn");
 let tiesDiv = document.querySelector("#ties");
 let resetButton = document.querySelector("#reset-button");
+let nextRoundButton = document.querySelector("#next-round-button");
+let screenboardSlides = document.querySelectorAll(".slide-screen");
 
 // add event listeners 
 tileButtons.forEach((button, index) => {
@@ -18,6 +20,7 @@ tileButtons.forEach((button, index) => {
         gameController.updateGameState(row, col);
 
         if (gameController.isGameOver()) {
+            screenboardSlides.forEach(slide => {slide.style.transform = "translateY(120%)"});
             displayController.disableTileButtons();
             gameController.updateScores();
         }
@@ -30,6 +33,14 @@ tileButtons.forEach((button, index) => {
 
 resetButton.addEventListener("click", (e) => {
     gameController.resetGame();
+    displayController.updateScoreboard();
+    displayController.resetDisplay();
+    screenboardSlides.forEach(slide => {slide.style.transform = ""});
+});
+
+nextRoundButton.addEventListener("click", (e) => {
+    screenboardSlides.forEach(slide => {slide.style.transform = ""});
+    gameController.clearBoard();
     displayController.resetDisplay();
 });
 
@@ -89,10 +100,14 @@ const gameController = (function () {
     }
 
     function resetGame() {
-        gameboard = createGameboard();
+        clearBoard();
         currentPlayer = players[0];
         players.forEach(player => player.resetScore());
         tieCounter = 0;
+    }
+
+    function clearBoard() {
+        gameboard = createGameboard();
     }
 
     function toggleCurrentPlayer() {
@@ -324,7 +339,7 @@ const gameController = (function () {
         return value;
     }
 
-    return { startNewGame, getBoard, getScores, updateScores, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer };
+    return { startNewGame, getBoard, clearBoard, getScores, updateScores, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer };
 })();
 
 function displayGameToConsole(board) {
