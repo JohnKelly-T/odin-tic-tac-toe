@@ -3,7 +3,7 @@
 }
 
 :root {
-    --background-color: #1A233B;
+    --background-color: 26, 35, 59;
     --default-color: 43, 61, 94;
     --navy-blue: 16, 20, 49;
 
@@ -14,12 +14,14 @@
 
     --rounded-border: 12px;
     --edge-height: 0.6rem;
+
+    --width: 300px;
 }
 
 /* Element selectors */
 
 body {
-    background-color: var(--background-color);
+    background-color: rgb(var(--background-color));
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -37,6 +39,10 @@ button:hover {
 }
 
 /* utility classes */
+
+.base {
+    position: relative;
+}
 
 .surface {
     
@@ -115,13 +121,12 @@ button:active .shadow {
 .main-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     gap: 4rem;
     margin: 1.5rem;
     padding: 3rem 0;
-    width: 300px;
-    height: 100vh;
+    width: var(--width);
 }
 
 .scoreboard {
@@ -369,10 +374,125 @@ button:active .shadow {
     color: rgb(var(--navy-blue));
 }
 
+#main-menu {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgb(var(--background-color));
+    border: none;
+}
+
+#main-menu .main-container {
+    /* width: 350px; */
+    gap: 3rem;
+
+}
+
+.mark-menu {
+    --surface-color: var(--default-color);
+    border-radius: var(--rounded-border);
+    box-shadow: 0 0 1px 2px rgb(var(--yellow)),
+                0 calc(var(--edge-height) / -2) 1px 2px rgb(var(--yellow));
+    width: 100%;
+    position: relative;
+}
+
+.mark-menu .surface {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: 1.5rem;
+    row-gap: 0.5rem;
+    width: 100%;
+    padding: 0.8rem 1.5rem 0.5rem;
+}
+
+.menu-label, .first-move-reminder {
+    grid-column: span 2;
+    text-align: center;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.first-move-reminder {
+    height: 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+.option {
+    display: flex;
+    justify-content: center;
+
+    background-color: rgb(var(--navy-blue));
+    aspect-ratio: 1;
+    border-radius: 10px;
+}
+
+.option-icon {
+    width: 35%;
+    fill: #98B0DD;
+    transition: all 0.2s ease;
+}
+
+.option:hover .option-icon {
+    filter: drop-shadow(0 0 2px rgb(var(--yellow))) 
+            brightness(130%);
+}
+
+.logo {
+    width: 4rem;
+    aspect-ratio: 1;
+    margin: -1rem;
+}
+
+.new-game-buttons-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.new-game-button {
+    width: 100%;
+    background: none;
+}
+
+.new-game-button .surface {
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7),
+                 0 -1px 1px black;
+    padding: 1rem;
+    color: rgb(var(--navy-blue));
+}
+
+.new-game-cpu {
+    --surface-color: var(--cyan);
+}
+
+.new-game-player {
+    --surface-color: var(--red);
+}
+
+/* state classes */
+
 .red {
+    fill: rgb(var(--red));
     color: rgb(var(--red));
 }
 
 .cyan {
+    fill: rgb(var(--cyan));
     color: rgb(var(--cyan));
+}
+
+.selected-option {
+    box-shadow: inset 0 0 2px 2px rgb(var(--yellow));
 }
