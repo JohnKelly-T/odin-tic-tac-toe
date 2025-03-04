@@ -16,6 +16,44 @@
   </head>
 </html>
   <body>
+    <dialog id="main-menu" open>
+      <div class="main-container">
+        <img src="./img/tic-tac-toe-logo.png" alt="" class="logo">
+
+        <div class="mark-menu base">
+          <div class="shadow"></div>
+          <div class="edge"></div>
+          <div class="surface">
+
+            <span class="menu-label">PICK PLAYER 1'S MARK</span>
+            <button id="x-option" class="option selected-option" data-selected>
+              <svg class="option-icon" fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 503.021 503.021" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M491.613,75.643l-64.235-64.235c-15.202-15.202-39.854-15.202-55.056,0L251.507,132.222L130.686,11.407 c-15.202-15.202-39.853-15.202-55.055,0L11.401,75.643c-15.202,15.202-15.202,39.854,0,55.056l120.821,120.815L11.401,372.328 c-15.202,15.202-15.202,39.854,0,55.056l64.235,64.229c15.202,15.202,39.854,15.202,55.056,0l120.815-120.814l120.822,120.814 c15.202,15.202,39.854,15.202,55.056,0l64.235-64.229c15.202-15.202,15.202-39.854,0-55.056L370.793,251.514l120.82-120.815 C506.815,115.49,506.815,90.845,491.613,75.643z"></path> </g> </g> </g></svg>
+            </button>
+            <button  id="o-option" class="option">
+              <svg class="option-icon" fill="currentColor" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>alt-circle</title> <path d="M0 16q0-3.232 1.28-6.208t3.392-5.12 5.12-3.392 6.208-1.28q3.264 0 6.24 1.28t5.088 3.392 3.392 5.12 1.28 6.208q0 3.264-1.28 6.208t-3.392 5.12-5.12 3.424-6.208 1.248-6.208-1.248-5.12-3.424-3.392-5.12-1.28-6.208zM8 16q0 3.328 2.336 5.664t5.664 2.336 5.664-2.336 2.336-5.664-2.336-5.632-5.664-2.368-5.664 2.368-2.336 5.632z"></path> </g></svg>
+            </button>
+            <span class="first-move-reminder">X GOES FIRST</span>
+          </div>
+        </div>
+
+        <div class="new-game-buttons-container">
+          <button class="new-game-cpu new-game-button base">
+            <div class="shadow"></div>
+            <div class="edge"></div>
+            <div class="surface">NEW GAME 	&#40;VS CPU&#41;</div>
+          </button>
+
+          <button class="new-game-player new-game-button base">
+            <div class="shadow"></div>
+            <div class="edge"></div>
+            <div class="surface">NEW GAME 	&#40;VS PLAYER&#41;</div>
+          </button>
+
+        </div>
+
+      </div>
+    </dialog>
+
     <div class="main-container">
 
       <div class="scoreboard base">
@@ -159,43 +197,5 @@
       </div>
 
     </div>
-
-    <dialog id="main-menu" open>
-      <div class="main-container">
-        <img src="./img/tic-tac-toe-logo.png" alt="" class="logo">
-
-        <div class="mark-menu base">
-          <div class="shadow"></div>
-          <div class="edge"></div>
-          <div class="surface">
-
-            <span class="menu-label">PICK PLAYER 1'S MARK</span>
-            <button id="x-option" class="option selected-option" data-selected>
-              <svg class="option-icon" fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 503.021 503.021" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M491.613,75.643l-64.235-64.235c-15.202-15.202-39.854-15.202-55.056,0L251.507,132.222L130.686,11.407 c-15.202-15.202-39.853-15.202-55.055,0L11.401,75.643c-15.202,15.202-15.202,39.854,0,55.056l120.821,120.815L11.401,372.328 c-15.202,15.202-15.202,39.854,0,55.056l64.235,64.229c15.202,15.202,39.854,15.202,55.056,0l120.815-120.814l120.822,120.814 c15.202,15.202,39.854,15.202,55.056,0l64.235-64.229c15.202-15.202,15.202-39.854,0-55.056L370.793,251.514l120.82-120.815 C506.815,115.49,506.815,90.845,491.613,75.643z"></path> </g> </g> </g></svg>
-            </button>
-            <button  id="o-option" class="option">
-              <svg class="option-icon" fill="currentColor" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>alt-circle</title> <path d="M0 16q0-3.232 1.28-6.208t3.392-5.12 5.12-3.392 6.208-1.28q3.264 0 6.24 1.28t5.088 3.392 3.392 5.12 1.28 6.208q0 3.264-1.28 6.208t-3.392 5.12-5.12 3.424-6.208 1.248-6.208-1.248-5.12-3.424-3.392-5.12-1.28-6.208zM8 16q0 3.328 2.336 5.664t5.664 2.336 5.664-2.336 2.336-5.664-2.336-5.632-5.664-2.368-5.664 2.368-2.336 5.632z"></path> </g></svg>
-            </button>
-            <span class="first-move-reminder">X GOES FIRST</span>
-          </div>
-        </div>
-
-        <div class="new-game-buttons-container">
-          <button class="new-game-cpu new-game-button base">
-            <div class="shadow"></div>
-            <div class="edge"></div>
-            <div class="surface">NEW GAME 	&#40;VS CPU&#41;</div>
-          </button>
-
-          <button class="new-game-player new-game-button base">
-            <div class="shadow"></div>
-            <div class="edge"></div>
-            <div class="surface">NEW GAME 	&#40;VS PLAYER&#41;</div>
-          </button>
-
-        </div>
-
-      </div>
-    </dialog>
   </body>
 </html>
