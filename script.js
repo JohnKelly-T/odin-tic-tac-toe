@@ -11,7 +11,28 @@ let resetButton = document.querySelector("#reset-button");
 let nextRoundButton = document.querySelector("#next-round-button");
 let gameOverMessage = document.querySelector("#game-over-message");
 
-// add event listeners 
+// main menu variables
+
+let xOption = document.querySelector("#x-option");
+let oOption = document.querySelector("#o-option");
+
+// event listeners 
+xOption.addEventListener("click", () => {
+    xOption.setAttribute("data-selected", "");
+    xOption.classList.add("selected-option");
+
+    oOption.removeAttribute("data-selected");
+    oOption.classList.remove("selected-option");
+});
+
+oOption.addEventListener("click", () => {
+    oOption.setAttribute("data-selected", "");
+    oOption.classList.add("selected-option");
+
+    xOption.removeAttribute("data-selected");
+    xOption.classList.remove("selected-option");
+});
+
 tileButtons.forEach((button, index) => {
     button.addEventListener("click", (e) => {
 
@@ -46,6 +67,9 @@ nextRoundButton.addEventListener("click", (e) => {
     displayController.resetDisplay();
 });
 
+
+// factory functions
+
 function createGameboard() {
     let gameboard = [
         [null, null, null],
@@ -78,6 +102,7 @@ function createPlayer(name, mark, isAI=false) {
     }
 }
 
+// game controller module
 const gameController = (function () {
     let gameboard = createGameboard();
     let players;
