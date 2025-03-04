@@ -311,12 +311,12 @@ button:active .shadow {
             drop-shadow(0 -1px 0 rgba(0, 0, 0, 0.8));
 }
 
-.red-tile {
+.red-surface {
     --surface-color: var(--red);
     box-shadow: 0 0 10px  rgb(var(--red), 0.25);
 }
 
-.cyan-tile {
+.cyan-surface {
     --surface-color: var(--cyan);
     box-shadow: 0 0 10px  rgb(var(--cyan), 0.15);
 }
@@ -371,7 +371,7 @@ button:active .shadow {
 }
 
 #main-menu {
-    z-index: 2;
+    z-index: 1;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -475,6 +475,83 @@ button:active .shadow {
 
 .new-game-player {
     --surface-color: var(--red);
+}
+
+#vs-cpu-dialog {
+    z-index: 2;
+    background-color: rgb(var(--background-color));
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.name-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    --surface-color: var(--default-color);
+}
+
+.form-card {
+    border-radius: var(--rounded-border);
+    box-shadow: 0 0 1px 2px rgb(var(--yellow)),
+                0 calc(var(--edge-height) / -2) 1px 2px rgb(var(--yellow));
+}
+
+.form-card .surface{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 1.8rem 2rem;
+    gap: 1rem;
+}
+
+.name-form label {
+    width: 100%;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem;
+}
+
+.name-form input {
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    background-color: rgb(var(--navy-blue));
+    transition: box-shadow 0.5s ease;
+}
+
+.name-form input:hover {
+    box-shadow: inset 0 3px 2px rgba(0, 0, 0, 0.5),
+                0 1px 2px rgba(255, 255, 255, 0.3);
+    transition: box-shadow 300ms ease;
+}
+
+.name-form input:focus-visible {
+    outline: none;
+    outline: 2px solid rgba(var(--yellow), 0.489);
+}
+
+button[type="submit"] {
+    background: none;
+}
+
+button[type="submit"] .surface {
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7),
+                 0 -1px 1px black;
+    padding: 1rem;
+    color: rgb(var(--navy-blue));
 }
 
 /* state classes */
