@@ -16,7 +16,7 @@
   </head>
 </html>
   <body>
-    <dialog id="main-menu" open>
+    <dialog id="main-menu">
       <div class="main-container">
         <img src="./img/tic-tac-toe-logo.png" alt="" class="logo">
 
@@ -197,5 +197,30 @@
       </div>
 
     </div>
+
+    <dialog id="vs-cpu-dialog" open>
+      <div class="main-container">
+
+        <form id="vs-cpu-form" class="name-form" action="">
+          <div class="form-card base">
+            <div class="shadow"></div>
+            <div class="edge"></div>
+            <div class="surface">
+              <label>
+                Enter your name
+                <input type="text" name="player1-name">
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="red-surface base">
+            <div class="shadow"></div>
+            <div class="edge"></div>
+            <div class="surface">PLAY</div>
+          </button>
+        </form>
+        
+      </div>
+    </dialog>
   </body>
 </html>
