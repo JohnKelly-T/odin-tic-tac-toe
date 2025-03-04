@@ -7,16 +7,55 @@ let xScoreDiv = document.querySelector("#x-score");
 let oScoreDiv = document.querySelector("#o-score");
 let turnDiv = document.querySelector("#turn");
 let tiesDiv = document.querySelector("#ties");
+let quitButton = document.querySelector("#quit-button");
 let resetButton = document.querySelector("#reset-button");
 let nextRoundButton = document.querySelector("#next-round-button");
 let gameOverMessage = document.querySelector("#game-over-message");
 
-// main menu variables
+// dialogs
+let mainMenu = document.querySelector("#main-menu");
+
+let vsCpuDialog = document.querySelector("#vs-cpu-dialog");
+let vsPlayerDialog = document.querySelector("#vs-player-dialog");
+
+let newGameCpuButton = document.querySelector(".new-game-cpu");
+let newGamePlayerButton = document.querySelector(".new-game-player");
+
+let vsCpuSubmitButton = document.querySelector
+// main menu elements
 
 let xOption = document.querySelector("#x-option");
 let oOption = document.querySelector("#o-option");
 
+// form elements
+
+let vsCpuForm = document.querySelector("#vs-cpu-form");
+let vsPlayerForm = document.querySelector("#vs-player-form");
+
 // event listeners 
+newGameCpuButton.addEventListener("click", (e) => {
+    vsCpuDialog.show();
+});
+
+vsCpuForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    mainMenu.close();
+    vsCpuDialog.close();
+})
+
+newGamePlayerButton.addEventListener("click", (e) => {
+    vsPlayerDialog.show();
+});
+
+vsPlayerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    mainMenu.close();
+    vsPlayerDialog.close();
+})
+
+
 xOption.addEventListener("click", () => {
     xOption.setAttribute("data-selected", "");
     xOption.classList.add("selected-option");
@@ -52,6 +91,11 @@ tileButtons.forEach((button, index) => {
         displayController.updateScoreboard();
         button.disabled = true;
     });                                                                          
+});
+
+quitButton.addEventListener("click", () => {
+    mainMenu.show();
+    displayController.resetDisplay();
 });
 
 resetButton.addEventListener("click", (e) => {
@@ -288,7 +332,7 @@ const gameController = (function () {
         return utility;
     }
 
-    function getMinimaxMove(board) {
+    function getMinimaxMove(board = gameboard.getBoard()) {
         let boardCopy = board.map(row => [...row]);
         let currentTurn = getTurnPlayer(board);
         let validMoves = getValidMoves(board);
@@ -409,9 +453,6 @@ const displayController = (function () {
         oScoreDiv.textContent = scores.oScore.toString();
         tiesDiv.textContent = scores.ties.toString();
         turnDiv.textContent = turn;
-        turnDiv.classList.toggle("red");
-        turnDiv.classList.toggle("cyan");
-
     }
 
     function updateGameOverMessage() {
@@ -458,7 +499,7 @@ const displayController = (function () {
             }
         }
 
-        let tileColor = (winner === "X") ? "red-tile" : "cyan-tile";
+        let tileColor = (winner === "X") ? "red-surface" : "cyan-surface";
 
         for (let index2d of winnerTiles) {
             let index1d = (index2d[0] * 3) + (index2d[1] % 3);
@@ -476,8 +517,8 @@ const displayController = (function () {
         });
 
         tileButtons.forEach(button => {
-            button.classList.remove("red-tile");
-            button.classList.remove("cyan-tile");
+            button.classList.remove("red-surface");
+            button.classList.remove("cyan-surface");
         })
 
         turnDiv.textContent = "X";
