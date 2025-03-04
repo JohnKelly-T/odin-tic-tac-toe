@@ -79,16 +79,42 @@ tileButtons.forEach((button, index) => {
         let col= index % 3;
 
         gameController.updateGameState(row, col);
+        displayController.updateTiles();
+        displayController.updateTurnDiv();
 
-        if (gameController.isGameOver()) {
-            displayController.updateGameOverMessage();
-            screenboardSlides.forEach(slide => {slide.style.transform = "translateY(120%)"});
+        if (gameController.getMode() === "vsCPU") {
+            screenboardSlides.forEach(slide => {slide.style.transform = "translateY(-120%)"});
             displayController.disableTileButtons();
-            gameController.updateScores();
+
+            gameController.makeCpuMove();
+
+            setTimeout(() => {
+                displayController.enableEmptyButtons();
+                displayController.updateScoreboard();
+                screenboardSlides.forEach(slide => {slide.style.transform = ""});
+    
+                displayController.updateTiles();
+                displayController.updateTurnDiv();
+                displayController.updateScoreboard();
+
+                if (gameController.isGameOver()) {
+                    displayController.updateGameOverMessage();
+                    screenboardSlides.forEach(slide => {slide.style.transform = "translateY(120%)"});
+                    displayController.disableTileButtons();
+                    gameController.updateScores();
+                    displayController.updateScoreboard();
+                }
+            }, 1000);
+        } else if (gameController.getMode() === "vsPlayer") {
+            if (gameController.isGameOver()) {
+                displayController.updateGameOverMessage();
+                screenboardSlides.forEach(slide => {slide.style.transform = "translateY(120%)"});
+                displayController.disableTileButtons();
+                gameController.updateScores();
+                displayController.updateScoreboard();
+            }
         }
 
-        displayController.updateTiles();
-        displayController.updateScoreboard();
         button.disabled = true;
     });                                                                          
 });
@@ -149,13 +175,19 @@ function createPlayer(name, mark, isAI=false) {
 // game controller module
 const gameController = (function () {
     let gameboard = createGameboard();
+    let gamemode;
     let players;
     let tieCounter = 0;
     let currentPlayer;
 
-    function startNewGame(xPlayer, oPlayer) {
+    function startNewGame(xPlayer, oPlayer, mode="vsPlayer") {
         players = [xPlayer, oPlayer];
         currentPlayer = xPlayer;
+        gamemode = mode;
+    }
+
+    function getMode() {
+        return gamemode;
     }
 
     function getBoard() {
@@ -332,6 +364,13 @@ const gameController = (function () {
         return utility;
     }
 
+    function makeCpuMove() {
+        if (!isGameOver()) {
+            let move = getMinimaxMove();
+            updateGameState(move[0], move[1]);
+        }
+    }
+
     function getMinimaxMove(board = gameboard.getBoard()) {
         let boardCopy = board.map(row => [...row]);
         let currentTurn = getTurnPlayer(board);
@@ -409,7 +448,7 @@ const gameController = (function () {
         return value;
     }
 
-    return { startNewGame, getBoard, clearBoard, getScores, updateScores, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer, checkWinner };
+    return { startNewGame, getMode, getBoard, clearBoard, getScores, updateScores, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer, checkWinner, makeCpuMove };
 })();
 
 function displayGameToConsole(board) {
@@ -446,12 +485,15 @@ const displayController = (function () {
     }
 
     function updateScoreboard() {
-        let turn = gameController.getTurnPlayer();
         let scores = gameController.getScores();
 
         xScoreDiv.textContent = scores.xScore.toString();
         oScoreDiv.textContent = scores.oScore.toString();
         tiesDiv.textContent = scores.ties.toString();
+    }
+
+    function updateTurnDiv() {
+        let turn = gameController.getTurnPlayer();
         turnDiv.textContent = turn;
     }
 
@@ -522,8 +564,6 @@ const displayController = (function () {
         })
 
         turnDiv.textContent = "X";
-        turnDiv.classList.add("red");
-        turnDiv.classList.remove("cyan");
         enableTileButtons();
 
         gameController.startNewGame(player1, player2);
@@ -541,7 +581,27 @@ const displayController = (function () {
         });
     }
 
-    return { updateTiles, updateScoreboard, resetDisplay, updateGameOverMessage, disableTileButtons, enableTileButtons };
+    function disableMarkedButtons() {
+        let board = gameController.getBoard().flat();
+
+        board.forEach( (mark, index) => {
+            if (mark !== null) {
+                tileButtons[index].disabled = true;
+            }
+        });
+    }
+
+    function enableEmptyButtons() {
+        let board = gameController.getBoard().flat();
+
+        board.forEach( (mark, index) => {
+            if (mark === null) {
+                tileButtons[index].disabled = false;
+            }
+        });
+    }
+
+    return { updateTiles, updateScoreboard, resetDisplay, updateGameOverMessage, disableTileButtons, enableTileButtons, disableMarkedButtons, enableEmptyButtons, updateTurnDiv };
 })();
 
 // createPlayers
