@@ -373,7 +373,7 @@ body > .main-container {
     color: rgb(var(--navy-blue));
 }
 
-#main-menu, #vs-cpu-dialog {
+dialog {
     width: 100vw;
     height: 100vh;
     z-index: 100;
@@ -386,7 +386,7 @@ body > .main-container {
     left: 0;
 }
 
-#main-menu .main-container, #vs-cpu-dialog .main-container {
+dialog > .main-container {
     position: absolute;
     top: 50%;
     left: 50%;
