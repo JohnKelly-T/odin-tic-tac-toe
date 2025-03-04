@@ -15,7 +15,7 @@
     --rounded-border: 12px;
     --edge-height: 0.6rem;
 
-    --width: 300px;
+    --width: 350px;
 }
 
 /* Element selectors */
@@ -118,14 +118,17 @@ button:active .shadow {
 
 /* element classes */
 
+body > .main-container {
+    z-index: 2;
+}
+
 .main-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 4rem;
-    margin: 1.5rem;
-    padding: 3rem 0;
+    padding: 1.5rem;
     width: var(--width);
 }
 
@@ -370,22 +373,25 @@ button:active .shadow {
     color: rgb(var(--navy-blue));
 }
 
-#main-menu {
-    z-index: 1;
+#main-menu, #vs-cpu-dialog {
     width: 100vw;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+    z-index: 100;
     background-color: rgb(var(--background-color));
     border: none;
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
-#main-menu .main-container {
-    /* width: 350px; */
-    gap: 3rem;
-
+#main-menu .main-container, #vs-cpu-dialog .main-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    text-align: center;
 }
 
 .mark-menu {
@@ -475,17 +481,6 @@ button:active .shadow {
 
 .new-game-player {
     --surface-color: var(--red);
-}
-
-#vs-cpu-dialog {
-    z-index: 2;
-    background-color: rgb(var(--background-color));
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
 }
 
 .name-form {
