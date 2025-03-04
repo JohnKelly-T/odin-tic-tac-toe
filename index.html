@@ -73,7 +73,7 @@
               </div>
               <div class="info-container">
                 <span class="info-label">TURN</span>
-                <span id="turn" class="info red">X</span>
+                <span id="turn" class="info">X</span>
               </div>
               
               <div class="info-container">
@@ -208,6 +208,34 @@
             <div class="surface">
               <label>
                 Enter your name
+                <input type="text" name="player1-name">
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="red-surface base">
+            <div class="shadow"></div>
+            <div class="edge"></div>
+            <div class="surface">PLAY</div>
+          </button>
+        </form>
+      </div>
+    </dialog>
+
+    <dialog id="vs-player-dialog" open>
+      <div class="main-container">
+
+        <form id="vs-player-form" class="name-form" action="">
+          <div class="form-card base">
+            <div class="shadow"></div>
+            <div class="edge"></div>
+            <div class="surface">
+              <label>
+                Enter player X's name
+                <input type="text" name="player1-name">
+              </label>
+              <label>
+                Enter player O's name
                 <input type="text" name="player1-name">
               </label>
             </div>
