@@ -131,8 +131,6 @@ button:active .shadow {
 
 .scoreboard {
     --surface-color: var(--default-color);
-
-    position: relative;
     width: 100%;
     border-radius: var(--rounded-border);
     box-shadow: 0 0 1px 2px rgb(var(--yellow)),
@@ -295,7 +293,6 @@ button:active .shadow {
 .tile {
     --surface-color: var(--default-color);
     aspect-ratio: 10 / 9;
-    position: relative;
     border: none;
     border-radius: var(--rounded-border);
     background: none;
@@ -353,7 +350,6 @@ button:active .shadow {
 }
 
 .action-button {
-    position: relative;
     align-items: center;
     background: none;
     border-radius: var(--rounded-border);
@@ -397,7 +393,6 @@ button:active .shadow {
     box-shadow: 0 0 1px 2px rgb(var(--yellow)),
                 0 calc(var(--edge-height) / -2) 1px 2px rgb(var(--yellow));
     width: 100%;
-    position: relative;
 }
 
 .mark-menu .surface {
