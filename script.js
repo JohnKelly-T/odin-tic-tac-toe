@@ -247,38 +247,6 @@ const gameController = (function () {
         currentPlayer = (currentPlayer === players[0]) ? players[1] : players[0];
     } 
 
-    function playRoundConsole() {
-        while(true) {
-            let move;
-            let moveX;
-            let moveY;
-
-            if (!currentPlayer.isAI) {
-                // move = prompt(`Enter your move ${currentPlayer.getName()} (enter 2 numbers responding to x and y without spaces ex. 01)`);
-                moveX = parseInt(move.split("")[0]);
-                moveY = parseInt(move.split("")[1]);
-            } else {
-                move = getMinimaxMove(gameboard.getBoard());
-                moveX = move[0];
-                moveY = move[1];
-            }
-
-            gameboard.placeMark(moveX, moveY, currentPlayer.getMark());
-
-            displayGameToConsole(gameboard.getBoard());
-
-            if (isGameOver(gameboard.getBoard())) {
-                break;
-            }
-
-            toggleCurrentPlayer();
-            
-        }
-
-        let winner = (checkWinner(gameboard.getBoard()) === currentPlayer.getMark()) ? currentPlayer.getName() : "It's a tie";
-        alert("Congrats " + winner);
-    }
-
     function updateGameState(row, col) {
         let validMoves = getValidMoves();
         
@@ -489,25 +457,6 @@ const gameController = (function () {
     return { createGame, getMode, getBoard, clearBoard, getScores, updateScores, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer, checkWinner, makeCpuMove };
 })();
 
-function displayGameToConsole(board) {
-    console.clear();
-    console.log(
-        "-------------------------\n" + 
-        "|       |       |       |\n" +
-        board[0].map(item => item === null ? "|       " :  "|   " + item + "   ").join("") + "|\n" +
-        "|       |       |       |\n" +
-        "-------------------------\n" + 
-        "|       |       |       |\n" +
-        board[1].map(item => item === null ? "|       " :  "|   " + item + "   ").join("") + "|\n" +
-        "|       |       |       |\n" +
-        "-------------------------\n" + 
-        "|       |       |       |\n" +
-        board[2].map(item => item === null ? "|       " :  "|   " + item + "   ").join("") + "|\n" +
-        "|       |       |       |\n" +
-        "-------------------------\n" 
-    );
-}
-
 const displayController = (function () {
     let gamemode;
 
@@ -655,7 +604,7 @@ const displayController = (function () {
             if ((board[0][0] === board[1][1] && board[1][1] === board[2][2])) {
                 winnerTiles.push([0, 0], [1, 1], [2, 2]);
             }
-            
+
             if (board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
                 winnerTiles.push([0, 2], [1, 1], [2, 0]);
             }
