@@ -454,7 +454,7 @@ const gameController = (function () {
         return value;
     }
 
-    return { createGame, getMode, getBoard, clearBoard, getScores, updateScores, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer, checkWinner, makeCpuMove };
+    return { createGame, getMode, getBoard, clearBoard, getScores, updateScores, resetGame, isGameOver, updateGameState, getTurnPlayer, checkWinner, makeCpuMove };
 })();
 
 const displayController = (function () {
