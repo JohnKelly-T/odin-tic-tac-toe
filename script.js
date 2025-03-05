@@ -12,6 +12,9 @@ let resetButton = document.querySelector("#reset-button");
 let nextRoundButton = document.querySelector("#next-round-button");
 let gameOverMessage = document.querySelector("#game-over-message");
 
+let player1Name = document.querySelector("#player-1-name");
+let player2Name = document.querySelector("#player-2-name");
+
 // dialogs
 let mainMenu = document.querySelector("#main-menu");
 
@@ -30,7 +33,12 @@ let oOption = document.querySelector("#o-option");
 // form elements
 
 let vsCpuForm = document.querySelector("#vs-cpu-form");
+let vsCpuNameInput = document.querySelector("#vs-cpu-form input[name='player1-name']");
+
 let vsPlayerForm = document.querySelector("#vs-player-form");
+let vsPlayer1NameInput = document.querySelector("#vs-player-form input[name='player1-name']");
+let vsPlayer2NameInput = document.querySelector("#vs-player-form input[name='player2-name']");
+
 
 // event listeners 
 newGameCpuButton.addEventListener("click", (e) => {
@@ -40,6 +48,33 @@ newGameCpuButton.addEventListener("click", (e) => {
 vsCpuForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    player1Name.textContent = vsCpuNameInput.value; 
+    player2Name.textContent = "CPU";
+
+    let playerMark = xOption.hasAttribute("data-selected") ? "X" : "O";
+    let cpuMark = playerMark === "X" ? "O" : "X";
+
+    // createPlayers
+    const player = createPlayer(player1Name.textContent, playerMark);
+    const cpu = createPlayer("Cpu", cpuMark, true);
+
+    if (playerMark === "X") {
+        player1Name.textContent = vsCpuNameInput.value; 
+        player2Name.textContent = "CPU";
+
+        gameController.startNewGame(player, cpu, "vsCPU");
+    } else {
+        player1Name.textContent = "CPU";
+        player2Name.textContent = vsCpuNameInput.value; 
+
+        gameController.startNewGame(cpu, player, "vsCPU");
+
+        gameController.makeCpuMove();
+        displayController.updateTiles();
+    }
+
+    vsCpuNameInput.value = "";
+    
     mainMenu.close();
     vsCpuDialog.close();
 })
@@ -50,6 +85,31 @@ newGamePlayerButton.addEventListener("click", (e) => {
 
 vsPlayerForm.addEventListener("submit", (e) => {
     e.preventDefault();
+
+    player1Name.textContent = vsPlayer1NameInput.value; 
+    player2Name.textContent = vsPlayer1NameInput.value;
+
+    let player1Mark = xOption.hasAttribute("data-selected") ? "X" : "O";
+    let player2Mark = player1Mark === "X" ? "O" : "X";
+
+    // createPlayers
+    const player1 = createPlayer(player1Name.textContent, player1Mark);
+    const player2 = createPlayer(player1Name.textContent, player2Mark);
+
+    if (player1Mark === "X") {
+        player1Name.textContent = vsPlayer1NameInput.value; 
+        player2Name.textContent = vsPlayer2NameInput.value;
+
+        gameController.startNewGame(player1, player2);
+    } else {
+        player1Name.textContent = vsPlayer2NameInput.value;
+        player2Name.textContent = vsPlayer1NameInput.value; 
+
+        gameController.startNewGame(player2, player1);
+    }
+
+    vsPlayer1NameInput.value = "";
+    vsPlayer2NameInput.value = "";
     
     mainMenu.close();
     vsPlayerDialog.close();
@@ -87,7 +147,7 @@ tileButtons.forEach((button, index) => {
             displayController.disableTileButtons();
 
             gameController.makeCpuMove();
-
+            
             setTimeout(() => {
                 displayController.enableEmptyButtons();
                 displayController.updateScoreboard();
@@ -603,12 +663,5 @@ const displayController = (function () {
 
     return { updateTiles, updateScoreboard, resetDisplay, updateGameOverMessage, disableTileButtons, enableTileButtons, disableMarkedButtons, enableEmptyButtons, updateTurnDiv };
 })();
-
-// createPlayers
-const player1 = createPlayer("John", "X");
-const player2 = createPlayer("Kelly", "O", true);
-
-gameController.startNewGame(player1, player2);
-// gameController.playRoundConsole();
 
 
