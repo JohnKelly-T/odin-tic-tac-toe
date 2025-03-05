@@ -147,6 +147,8 @@ tileButtons.forEach((button, index) => {
             displayController.disableTileButtons();
 
             gameController.makeCpuMove();
+
+            let timeoutSeconds = gameController.isGameOver() ? 0 : 1000;
             
             setTimeout(() => {
                 displayController.enableEmptyButtons();
@@ -164,7 +166,7 @@ tileButtons.forEach((button, index) => {
                     gameController.updateScores();
                     displayController.updateScoreboard();
                 }
-            }, 1000);
+            }, timeoutSeconds);
         } else if (gameController.getMode() === "vsPlayer") {
             if (gameController.isGameOver()) {
                 displayController.updateGameOverMessage();
@@ -181,6 +183,7 @@ tileButtons.forEach((button, index) => {
 
 quitButton.addEventListener("click", () => {
     mainMenu.show();
+    gameController.resetGame();
     displayController.resetDisplay();
 });
 
