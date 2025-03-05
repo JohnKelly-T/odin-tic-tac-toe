@@ -12,8 +12,8 @@ let resetButton = document.querySelector("#reset-button");
 let nextRoundButton = document.querySelector("#next-round-button");
 let gameOverMessage = document.querySelector("#game-over-message");
 
-let player1Name = document.querySelector("#player-1-name");
-let player2Name = document.querySelector("#player-2-name");
+let xPlayerName = document.querySelector("#player-1-name");
+let oPlayerName = document.querySelector("#player-2-name");
 
 // dialogs
 let mainMenu = document.querySelector("#main-menu");
@@ -48,30 +48,8 @@ newGameCpuButton.addEventListener("click", (e) => {
 vsCpuForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    player1Name.textContent = vsCpuNameInput.value; 
-    player2Name.textContent = "CPU";
-
-    let playerMark = xOption.hasAttribute("data-selected") ? "X" : "O";
-    let cpuMark = playerMark === "X" ? "O" : "X";
-
-    // createPlayers
-    const player = createPlayer(player1Name.textContent, playerMark);
-    const cpu = createPlayer("Cpu", cpuMark, true);
-
-    if (playerMark === "X") {
-        player1Name.textContent = vsCpuNameInput.value; 
-        player2Name.textContent = "CPU";
-
-        gameController.startNewGame(player, cpu, "vsCPU");
-    } else {
-        player1Name.textContent = "CPU";
-        player2Name.textContent = vsCpuNameInput.value; 
-
-        gameController.startNewGame(cpu, player, "vsCPU");
-
-        gameController.makeCpuMove();
-        displayController.updateTiles();
-    }
+    let playerName = vsCpuNameInput.value;
+    displayController.startNewGame(playerName);
 
     vsCpuNameInput.value = "";
     
@@ -86,27 +64,10 @@ newGamePlayerButton.addEventListener("click", (e) => {
 vsPlayerForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    player1Name.textContent = vsPlayer1NameInput.value; 
-    player2Name.textContent = vsPlayer1NameInput.value;
+    let firstPlayerName = vsPlayer1NameInput.value;
+    let secondPlayerName = vsPlayer2NameInput.value;
 
-    let player1Mark = xOption.hasAttribute("data-selected") ? "X" : "O";
-    let player2Mark = player1Mark === "X" ? "O" : "X";
-
-    // createPlayers
-    const player1 = createPlayer(player1Name.textContent, player1Mark);
-    const player2 = createPlayer(player1Name.textContent, player2Mark);
-
-    if (player1Mark === "X") {
-        player1Name.textContent = vsPlayer1NameInput.value; 
-        player2Name.textContent = vsPlayer2NameInput.value;
-
-        gameController.startNewGame(player1, player2);
-    } else {
-        player1Name.textContent = vsPlayer2NameInput.value;
-        player2Name.textContent = vsPlayer1NameInput.value; 
-
-        gameController.startNewGame(player2, player1);
-    }
+    displayController.startNewGame(firstPlayerName, secondPlayerName);
 
     vsPlayer1NameInput.value = "";
     vsPlayer2NameInput.value = "";
@@ -114,7 +75,6 @@ vsPlayerForm.addEventListener("submit", (e) => {
     mainMenu.close();
     vsPlayerDialog.close();
 })
-
 
 xOption.addEventListener("click", () => {
     xOption.setAttribute("data-selected", "");
@@ -138,46 +98,46 @@ tileButtons.forEach((button, index) => {
         let row = Math.floor( index / 3 );
         let col= index % 3;
 
-        gameController.updateGameState(row, col);
-        displayController.updateTiles();
-        displayController.updateTurnDiv();
+        displayController.makeMove(row, col);
+        // displayController.updateTiles();
+        // displayController.updateTurnDiv();
 
-        if (gameController.getMode() === "vsCPU") {
-            screenboardSlides.forEach(slide => {slide.style.transform = "translateY(-120%)"});
-            displayController.disableTileButtons();
+        // if (gameController.getMode() === "vsCPU") {
+        //     screenboardSlides.forEach(slide => {slide.style.transform = "translateY(-120%)"});
+        //     displayController.disableTileButtons();
 
-            gameController.makeCpuMove();
+        //     gameController.makeCpuMove();
 
-            let timeoutSeconds = gameController.isGameOver() ? 0 : 1000;
+        //     let timeoutSeconds = gameController.isGameOver() ? 0 : 1000;
             
-            setTimeout(() => {
-                displayController.enableTileButtons();
-                displayController.updateScoreboard();
-                screenboardSlides.forEach(slide => {slide.style.transform = ""});
+        //     setTimeout(() => {
+        //         displayController.enableTileButtons();
+        //         displayController.updateScoreboard();
+        //         screenboardSlides.forEach(slide => {slide.style.transform = ""});
     
-                displayController.updateTiles();
-                displayController.updateTurnDiv();
-                displayController.updateScoreboard();
+        //         displayController.updateTiles();
+        //         displayController.updateTurnDiv();
+        //         displayController.updateScoreboard();
 
-                if (gameController.isGameOver()) {
-                    displayController.updateGameOverMessage();
-                    screenboardSlides.forEach(slide => {slide.style.transform = "translateY(120%)"});
-                    displayController.disableTileButtons();
-                    gameController.updateScores();
-                    displayController.updateScoreboard();
-                }
-            }, timeoutSeconds);
-        } else if (gameController.getMode() === "vsPlayer") {
-            if (gameController.isGameOver()) {
-                displayController.updateGameOverMessage();
-                screenboardSlides.forEach(slide => {slide.style.transform = "translateY(120%)"});
-                displayController.disableTileButtons();
-                gameController.updateScores();
-                displayController.updateScoreboard();
-            }
-        }
+        //         if (gameController.isGameOver()) {
+        //             displayController.updateGameOverMessage();
+        //             screenboardSlides.forEach(slide => {slide.style.transform = "translateY(120%)"});
+        //             displayController.disableTileButtons();
+        //             gameController.updateScores();
+        //             displayController.updateScoreboard();
+        //         }
+        //     }, timeoutSeconds);
+        // } else if (gameController.getMode() === "vsPlayer") {
+        //     if (gameController.isGameOver()) {
+        //         displayController.updateGameOverMessage();
+        //         screenboardSlides.forEach(slide => {slide.style.transform = "translateY(120%)"});
+        //         displayController.disableTileButtons();
+        //         gameController.updateScores();
+        //         displayController.updateScoreboard();
+        //     }
+        // }
 
-        button.disabled = true;
+        // button.disabled = true;
     });                                                                          
 });
 
@@ -198,8 +158,8 @@ nextRoundButton.addEventListener("click", (e) => {
     screenboardSlides.forEach(slide => {slide.style.transform = ""});
     gameController.clearBoard();
     displayController.resetDisplay();
+    displayController.updateTiles();
 });
-
 
 // factory functions
 
@@ -237,16 +197,20 @@ function createPlayer(name, mark, isAI=false) {
 
 // game controller module
 const gameController = (function () {
-    let gameboard = createGameboard();
+    let gameboard;
     let gamemode;
     let players;
     let tieCounter = 0;
     let currentPlayer;
 
-    function startNewGame(xPlayer, oPlayer, mode="vsPlayer") {
+    function createGame(xPlayer, oPlayer) {
         players = [xPlayer, oPlayer];
         currentPlayer = xPlayer;
-        gamemode = mode;
+        gameboard = createGameboard();
+        
+        if (xPlayer.isAI) {
+            makeCpuMove();
+        }
     }
 
     function getMode() {
@@ -273,6 +237,10 @@ const gameController = (function () {
 
     function clearBoard() {
         gameboard = createGameboard();
+        currentPlayer = players[0];
+        if (currentPlayer.isAI) {
+            makeCpuMove();
+        }
     }
 
     function toggleCurrentPlayer() {
@@ -316,7 +284,10 @@ const gameController = (function () {
         
         if (validMoves.some(([r , c]) => r === row && c === col)) {
             gameboard.placeMark(row, col, currentPlayer.getMark());
+        } else {
+            return;
         }
+
         toggleCurrentPlayer();
     }
 
@@ -515,7 +486,7 @@ const gameController = (function () {
         return value;
     }
 
-    return { startNewGame, getMode, getBoard, clearBoard, getScores, updateScores, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer, checkWinner, makeCpuMove };
+    return { createGame, getMode, getBoard, clearBoard, getScores, updateScores, resetGame, isGameOver, playRoundConsole, updateGameState, getTurnPlayer, checkWinner, makeCpuMove };
 })();
 
 function displayGameToConsole(board) {
@@ -538,6 +509,86 @@ function displayGameToConsole(board) {
 }
 
 const displayController = (function () {
+    let gamemode;
+
+    function startNewGame(firstPlayerName, secondPlayerName="CPU") {
+
+        let firstPlayerMark;
+        let secondPlayerMark;
+
+        // get player marks
+        if (xOption.hasAttribute("data-selected")) {
+            firstPlayerMark = "X";
+            secondPlayerMark = "O";
+            xPlayerName.textContent = firstPlayerName; 
+            oPlayerName.textContent = secondPlayerName;
+        } else {
+            secondPlayerMark = "X";
+            firstPlayerMark = "O";
+            xPlayerName.textContent = secondPlayerName; 
+            oPlayerName.textContent = firstPlayerName;
+        }
+    
+        // createPlayers
+        let xPlayer;
+        let oPlayer;
+        if (secondPlayerName === "CPU") {
+            gamemode = "vsCpu";
+            xPlayer = (firstPlayerMark === "X") ? createPlayer(firstPlayerName, firstPlayerMark) : createPlayer(secondPlayerName, secondPlayerMark, true);
+            oPlayer = (firstPlayerMark === "O") ? createPlayer(firstPlayerName, firstPlayerMark) : createPlayer(secondPlayerName, secondPlayerMark, true);
+        } else {
+            gamemode = "vsPlayer";
+            xPlayer = (firstPlayerMark === "X") ? createPlayer(firstPlayerName, firstPlayerMark) : createPlayer(secondPlayerName, secondPlayerMark);
+            oPlayer = (firstPlayerMark === "O") ? createPlayer(firstPlayerName, firstPlayerMark) : createPlayer(secondPlayerName, secondPlayerMark);
+        }
+    
+        gameController.createGame(xPlayer, oPlayer);
+        updateTiles();
+    }
+
+    function makeMove(row, col) {
+        gameController.updateGameState(row, col);
+        updateTiles();
+
+        let timeout = 0;
+
+        if (gamemode === "vsCpu" && !gameController.isGameOver()) {
+            timeout = 1000;
+
+            disableTileButtons();
+            gameController.makeCpuMove();
+            showCpuThinkingMessage();
+        }
+
+        setTimeout(() => {
+            updateTurnDiv();
+            showScoreboardScreen();
+            updateTiles();
+            enableTileButtons();
+
+            if (gameController.isGameOver()) {
+                gameController.updateScores();
+                updateGameOverMessage();
+                showGameOverMessage();
+                disableTileButtons();
+            }
+
+            updateScoreboard();
+
+        }, timeout);
+    }
+
+    function showCpuThinkingMessage() {
+        screenboardSlides.forEach(slide => {slide.style.transform = "translateY(-120%)"});
+    }
+
+    function showScoreboardScreen() {
+        screenboardSlides.forEach(slide => {slide.style.transform = ""})
+    }
+
+    function showGameOverMessage() {
+        screenboardSlides.forEach(slide => {slide.style.transform = "translateY(120%)"});
+    }
 
     function updateTiles() {
         let gameboard = gameController.getBoard();
@@ -603,7 +654,9 @@ const displayController = (function () {
         if (board[1][1] !== null) {
             if ((board[0][0] === board[1][1] && board[1][1] === board[2][2])) {
                 winnerTiles.push([0, 0], [1, 1], [2, 2]);
-            } else if (board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+            }
+            
+            if (board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
                 winnerTiles.push([0, 2], [1, 1], [2, 0]);
             }
         }
@@ -632,6 +685,7 @@ const displayController = (function () {
 
         turnDiv.textContent = "X";
         enableTileButtons();
+        updateScoreboard();
     }
 
     function disableTileButtons() {
@@ -646,5 +700,5 @@ const displayController = (function () {
         });
     }
 
-    return { updateTiles, updateScoreboard, resetDisplay, updateGameOverMessage, disableTileButtons, enableTileButtons, updateTurnDiv };
+    return { startNewGame, makeMove, updateTiles, updateScoreboard, resetDisplay, updateGameOverMessage, disableTileButtons, enableTileButtons, updateTurnDiv };
 })();
