@@ -38,6 +38,11 @@ button:hover {
     cursor: pointer;
 }
 
+input:-webkit-autofill {
+    background-color: transparent !important; /* Removes autofill background */
+    -webkit-box-shadow: 0 0 0px 1000px rgb(var(--yellow)) inset !important; /* Forces a white background */
+  }
+
 /* utility classes */
 
 .base {
