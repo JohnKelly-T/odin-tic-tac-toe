@@ -99,45 +99,6 @@ tileButtons.forEach((button, index) => {
         let col= index % 3;
 
         displayController.makeMove(row, col);
-        // displayController.updateTiles();
-        // displayController.updateTurnDiv();
-
-        // if (gameController.getMode() === "vsCPU") {
-        //     screenboardSlides.forEach(slide => {slide.style.transform = "translateY(-120%)"});
-        //     displayController.disableTileButtons();
-
-        //     gameController.makeCpuMove();
-
-        //     let timeoutSeconds = gameController.isGameOver() ? 0 : 1000;
-            
-        //     setTimeout(() => {
-        //         displayController.enableTileButtons();
-        //         displayController.updateScoreboard();
-        //         screenboardSlides.forEach(slide => {slide.style.transform = ""});
-    
-        //         displayController.updateTiles();
-        //         displayController.updateTurnDiv();
-        //         displayController.updateScoreboard();
-
-        //         if (gameController.isGameOver()) {
-        //             displayController.updateGameOverMessage();
-        //             screenboardSlides.forEach(slide => {slide.style.transform = "translateY(120%)"});
-        //             displayController.disableTileButtons();
-        //             gameController.updateScores();
-        //             displayController.updateScoreboard();
-        //         }
-        //     }, timeoutSeconds);
-        // } else if (gameController.getMode() === "vsPlayer") {
-        //     if (gameController.isGameOver()) {
-        //         displayController.updateGameOverMessage();
-        //         screenboardSlides.forEach(slide => {slide.style.transform = "translateY(120%)"});
-        //         displayController.disableTileButtons();
-        //         gameController.updateScores();
-        //         displayController.updateScoreboard();
-        //     }
-        // }
-
-        // button.disabled = true;
     });                                                                          
 });
 
@@ -198,7 +159,6 @@ function createPlayer(name, mark, isAI=false) {
 // game controller module
 const gameController = (function () {
     let gameboard;
-    let gamemode;
     let players;
     let tieCounter = 0;
     let currentPlayer;
@@ -211,10 +171,6 @@ const gameController = (function () {
         if (xPlayer.isAI) {
             makeCpuMove();
         }
-    }
-
-    function getMode() {
-        return gamemode;
     }
 
     function getBoard() {
@@ -454,7 +410,7 @@ const gameController = (function () {
         return value;
     }
 
-    return { createGame, getMode, getBoard, clearBoard, getScores, updateScores, resetGame, isGameOver, updateGameState, getTurnPlayer, checkWinner, makeCpuMove };
+    return { createGame, getBoard, clearBoard, getScores, updateScores, resetGame, isGameOver, updateGameState, getTurnPlayer, checkWinner, makeCpuMove };
 })();
 
 const displayController = (function () {
