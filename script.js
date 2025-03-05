@@ -311,8 +311,12 @@ const gameController = (function () {
         alert("Congrats " + winner);
     }
 
-    function updateGameState(x, y) {
-        gameboard.placeMark(x, y, currentPlayer.getMark());
+    function updateGameState(row, col) {
+        let validMoves = getValidMoves();
+        
+        if (validMoves.some(([r , c]) => r === row && c === col)) {
+            gameboard.placeMark(row, col, currentPlayer.getMark());
+        }
         toggleCurrentPlayer();
     }
 
@@ -667,4 +671,9 @@ const displayController = (function () {
     return { updateTiles, updateScoreboard, resetDisplay, updateGameOverMessage, disableTileButtons, enableTileButtons, disableMarkedButtons, enableEmptyButtons, updateTurnDiv };
 })();
 
+
+let player1 = createPlayer("john", "X");
+let player2 = createPlayer("john", "X", true);
+
+gameController.startNewGame(player1, player2);
 
