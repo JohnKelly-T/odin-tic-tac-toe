@@ -151,7 +151,7 @@ tileButtons.forEach((button, index) => {
             let timeoutSeconds = gameController.isGameOver() ? 0 : 1000;
             
             setTimeout(() => {
-                displayController.enableEmptyButtons();
+                displayController.enableTileButtons();
                 displayController.updateScoreboard();
                 screenboardSlides.forEach(slide => {slide.style.transform = ""});
     
@@ -632,8 +632,6 @@ const displayController = (function () {
 
         turnDiv.textContent = "X";
         enableTileButtons();
-
-        gameController.startNewGame(player1, player2);
     }
 
     function disableTileButtons() {
@@ -648,32 +646,5 @@ const displayController = (function () {
         });
     }
 
-    function disableMarkedButtons() {
-        let board = gameController.getBoard().flat();
-
-        board.forEach( (mark, index) => {
-            if (mark !== null) {
-                tileButtons[index].disabled = true;
-            }
-        });
-    }
-
-    function enableEmptyButtons() {
-        let board = gameController.getBoard().flat();
-
-        board.forEach( (mark, index) => {
-            if (mark === null) {
-                tileButtons[index].disabled = false;
-            }
-        });
-    }
-
-    return { updateTiles, updateScoreboard, resetDisplay, updateGameOverMessage, disableTileButtons, enableTileButtons, disableMarkedButtons, enableEmptyButtons, updateTurnDiv };
+    return { updateTiles, updateScoreboard, resetDisplay, updateGameOverMessage, disableTileButtons, enableTileButtons, updateTurnDiv };
 })();
-
-
-let player1 = createPlayer("john", "X");
-let player2 = createPlayer("john", "X", true);
-
-gameController.startNewGame(player1, player2);
-
