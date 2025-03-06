@@ -159,7 +159,9 @@ quitButton.addEventListener("click", () => {
 resetButton.addEventListener("click", (e) => {
     gameController.resetGame();
     displayController.updateScoreboard();
+    gameController.clearBoard();
     displayController.resetDisplay();
+    displayController.updateTiles();
     screenboardSlides.forEach(slide => {slide.style.transform = ""});
 });
 
