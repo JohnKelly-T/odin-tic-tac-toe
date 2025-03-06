@@ -83,7 +83,7 @@ vsCpuForm.addEventListener("submit", (e) => {
     displayController.startNewGame(playerName);
 
     vsCpuNameInput.value = "";
-    
+
     mainMenu.close();
     vsCpuDialog.close();
     
@@ -149,6 +149,7 @@ quitButton.addEventListener("click", () => {
     mainMenu.show();
     gameController.resetGame();
     displayController.resetDisplay();
+    displayController.showScoreboardScreen();
 
     stopAllSounds();
     mainMenuMusic.currentTime = 0;
@@ -662,7 +663,7 @@ const displayController = (function () {
         });
     }
 
-    return { startNewGame, makeMove, updateTiles, updateScoreboard, resetDisplay, updateGameOverMessage, disableTileButtons, enableTileButtons, updateTurnDiv };
+    return { startNewGame, makeMove, updateTiles, updateScoreboard, showScoreboardScreen, resetDisplay, updateGameOverMessage, disableTileButtons, enableTileButtons, updateTurnDiv };
 })();
 
 mainMenu.close();
