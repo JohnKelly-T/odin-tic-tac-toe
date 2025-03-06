@@ -587,3 +587,29 @@ button[type="submit"] .surface {
 .selected-option svg {
     filter: brightness(130%);
 }
+
+@media (hover: none) and (pointer: coarse) {
+
+    @keyframes click {
+        0%, 100% {
+            transform: translateY(calc(var(--edge-height) / -1));
+        }
+
+        10% {
+            transform: translateY(-2px);
+        }
+    }
+
+    button .surface {
+        transform: translateY(calc(var(--edge-height) / -1));
+    }
+
+    .tile:hover .surface {
+        transition: unset;
+        transform: translateY(calc(var(--edge-height) / -1));
+    }
+
+    .tile:active .surface {
+        animation: click 0.3s;
+    }
+}
