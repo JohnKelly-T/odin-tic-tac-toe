@@ -262,10 +262,11 @@ const gameController = (function () {
         if (validMoves.some(([r , c]) => r === row && c === col)) {
             gameboard.placeMark(row, col, currentPlayer.getMark());
         } else {
-            return;
+            return false;
         }
 
         toggleCurrentPlayer();
+        return true;
     }
 
     function updateScores() {
@@ -505,12 +506,12 @@ const displayController = (function () {
     }
 
     function makeMove(row, col) {
-        gameController.updateGameState(row, col);
+        let moveWasMade = gameController.updateGameState(row, col);
         updateTiles();
 
         let timeout = 0;
 
-        if (gamemode === "vsCpu" && !gameController.isGameOver()) {
+        if (gamemode === "vsCpu" && !gameController.isGameOver() && moveWasMade) {
             timeout = 1000;
 
             disableTileButtons();
