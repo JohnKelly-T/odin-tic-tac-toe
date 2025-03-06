@@ -164,6 +164,9 @@ resetButton.addEventListener("click", (e) => {
     displayController.resetDisplay();
     displayController.updateTiles();
     screenboardSlides.forEach(slide => {slide.style.transform = ""});
+
+    battleMusic.currentTime = 1;
+    battleMusic.play();
 });
 
 nextRoundButton.addEventListener("click", (e) => {
