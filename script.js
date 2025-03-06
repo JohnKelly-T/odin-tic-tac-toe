@@ -16,6 +16,7 @@ let xPlayerName = document.querySelector("#player-1-name");
 let oPlayerName = document.querySelector("#player-2-name");
 
 // dialogs
+
 let mainMenu = document.querySelector("#main-menu");
 
 let vsCpuDialog = document.querySelector("#vs-cpu-dialog");
@@ -24,7 +25,6 @@ let vsPlayerDialog = document.querySelector("#vs-player-dialog");
 let newGameCpuButton = document.querySelector(".new-game-cpu");
 let newGamePlayerButton = document.querySelector(".new-game-player");
 
-let vsCpuSubmitButton = document.querySelector
 // main menu elements
 
 let xOption = document.querySelector("#x-option");
@@ -39,9 +39,40 @@ let vsPlayerForm = document.querySelector("#vs-player-form");
 let vsPlayer1NameInput = document.querySelector("#vs-player-form input[name='player1-name']");
 let vsPlayer2NameInput = document.querySelector("#vs-player-form input[name='player2-name']");
 
+// audio 
+const mainMenuMusic = new Audio("./audio/neon-gaming.mp3");
+mainMenuMusic.volume = 0.005;
+mainMenuMusic.loop = true;
 
-// event listeners 
+const battleMusic = new Audio("./audio/chiptune-grooving.mp3");
+battleMusic.volume = 0.01;
+battleMusic.loop = true;
+
+const gameStartSound = new Audio("./audio/game-start.mp3");
+gameStartSound.volume = 0.01;
+
+const gameOverSound = new Audio("./audio/round-end.mp3");
+gameOverSound.volume = 0.02;
+
+const clickSound = new Audio("./audio/click-sound.mp3");
+clickSound.preload = "auto";
+
+function stopAllSounds() {
+    mainMenuMusic.pause();
+    mainMenuMusic.currentTime = 0;
+    battleMusic.pause();
+    mainMenuMusic.currentTime = 1;
+}
+
+
+// event listeners
+
+document.querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", () => clickSound.play());
+});
+
 newGameCpuButton.addEventListener("click", (e) => {
+    mainMenuMusic.play()
     vsCpuDialog.show();
 });
 
@@ -55,9 +86,15 @@ vsCpuForm.addEventListener("submit", (e) => {
     
     mainMenu.close();
     vsCpuDialog.close();
+    
+    stopAllSounds();
+    gameStartSound.play();
+    battleMusic.currentTime = 0;
+    battleMusic.play();
 })
 
 newGamePlayerButton.addEventListener("click", (e) => {
+    mainMenuMusic.play()
     vsPlayerDialog.show();
 });
 
@@ -74,6 +111,11 @@ vsPlayerForm.addEventListener("submit", (e) => {
     
     mainMenu.close();
     vsPlayerDialog.close();
+
+    stopAllSounds();
+    gameStartSound.play();
+    battleMusic.currentTime = 0;
+    battleMusic.play();
 })
 
 xOption.addEventListener("click", () => {
@@ -103,9 +145,15 @@ tileButtons.forEach((button, index) => {
 });
 
 quitButton.addEventListener("click", () => {
+    mainMenuMusic.play();
     mainMenu.show();
     gameController.resetGame();
     displayController.resetDisplay();
+
+    stopAllSounds();
+    mainMenuMusic.currentTime = 0;
+    mainMenuMusic.pause();
+    mainMenuMusic.play();
 });
 
 resetButton.addEventListener("click", (e) => {
@@ -120,6 +168,9 @@ nextRoundButton.addEventListener("click", (e) => {
     gameController.clearBoard();
     displayController.resetDisplay();
     displayController.updateTiles();
+
+    battleMusic.currentTime = 1;
+    battleMusic.play();
 });
 
 // factory functions
@@ -521,6 +572,9 @@ const displayController = (function () {
     }
 
     function updateGameOverMessage() {
+        gameOverSound.play();
+        stopAllSounds();
+
         let winner = gameController.checkWinner();
 
         if (winner === "X") {
@@ -607,3 +661,6 @@ const displayController = (function () {
 
     return { startNewGame, makeMove, updateTiles, updateScoreboard, resetDisplay, updateGameOverMessage, disableTileButtons, enableTileButtons, updateTurnDiv };
 })();
+
+mainMenu.close();
+mainMenu.show();
