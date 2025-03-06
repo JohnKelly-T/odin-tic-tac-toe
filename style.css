@@ -610,6 +610,6 @@ button[type="submit"] .surface {
     }
 
     .tile:active .surface {
-        animation: click 0.3s;
+        animation: click 0.6s;
     }
 }
