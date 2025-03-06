@@ -14,8 +14,6 @@
 
     --rounded-border: 12px;
     --edge-height: 0.6rem;
-
-    --width: 350px;
 }
 
 /* Element selectors */
@@ -32,6 +30,7 @@ body {
 button {
     padding: 0;
     border: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 button:hover {
@@ -134,7 +133,7 @@ body > .main-container {
     align-items: center;
     gap: 4rem;
     padding: 1.5rem;
-    width: var(--width);
+    width: min(350px, 100%);
 }
 
 .scoreboard {
