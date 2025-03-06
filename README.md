@@ -34,6 +34,8 @@ A simple Tic Tac Toe game built using JavaScript, HTML, and CSS as part of [The 
 - Handling user interactions dynamically
 
 
+## Sound Effects
+The sound effects used in this project are sourced from [Pixabay](https://pixabay.com/sound-effects/) and are licensed under the [Pixabay License](https://pixabay.com/service/license-summary/).
 
 
 ## Third-Party Assets
