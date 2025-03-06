@@ -41,18 +41,18 @@ let vsPlayer2NameInput = document.querySelector("#vs-player-form input[name='pla
 
 // audio 
 const mainMenuMusic = new Audio("./audio/neon-gaming.mp3");
-mainMenuMusic.volume = 0.005;
+mainMenuMusic.volume = 0.05;
 mainMenuMusic.loop = true;
 
 const battleMusic = new Audio("./audio/chiptune-grooving.mp3");
-battleMusic.volume = 0.01;
+battleMusic.volume = 0.1;
 battleMusic.loop = true;
 
 const gameStartSound = new Audio("./audio/game-start.mp3");
-gameStartSound.volume = 0.01;
+gameStartSound.volume = 0.1;
 
 const gameOverSound = new Audio("./audio/round-end.mp3");
-gameOverSound.volume = 0.02;
+gameOverSound.volume = 0.2;
 
 const clickSound = new Audio("./audio/click-sound.mp3");
 clickSound.preload = "auto";
